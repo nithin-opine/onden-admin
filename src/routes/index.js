@@ -10,6 +10,7 @@ import Logout from "../pages/Authentication/Logout"
 import Register from "../pages/Authentication/Register"
 import ForgetPwd from "../pages/Authentication/ForgetPassword"
 import StudentList from "../pages/Students"
+import ApplicationList from "../pages/Applications"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -20,6 +21,7 @@ const authProtectedRoutes = [
   // //profile
   { path: "/profile", component: UserProfile },
   { path: "/student-list", component: StudentList },
+  { path: "/application-list", component: ApplicationList },
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
