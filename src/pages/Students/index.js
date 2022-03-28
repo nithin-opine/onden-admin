@@ -32,13 +32,8 @@ const columns = [
     sort: true,
   },
   {
-    dataField: "firstname",
-    text: "First Name",
-    sort: true,
-  },
-  {
-    dataField: "lastname",
-    text: "Last Name",
+    dataField: "name",
+    text: "Student Name",
     sort: true,
   },
   {
@@ -67,7 +62,7 @@ const columns = [
     sort: true,
   },
   {
-    dataField: "viewprofile",
+    dataField: "view",
     text: "View Profile",
     sort: true,
   },
@@ -396,7 +391,6 @@ const sizePerPageList = [
   { text: "15", value: 15 },
   { text: "20", value: 20 },
   { text: "25", value: 25 },
-  { text: "All", value: productData.length },
 ]
 
 // Select All Button operation
@@ -407,17 +401,45 @@ const selectRow = {
 const { SearchBar } = Search
 
 class Dashboard extends Component {
-  state = {
-    apiData: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      apiData: [],
+      tableData: [],
+    }
   }
+
   componentDidMount() {
     let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
     let resp = apiGet(url)
+
     resp.then(resp => {
-      this.setState({ apiData: resp.response.data.data })
+      console.log(resp)
+      const rows = []
+      resp.response.data.data.forEach((value, index) => {
+        let date = new Date(value.dateCreated)
+        let localDate = date.toLocaleString()
+        rows.push({
+          id: value.studentId,
+          name: value.firstname + " " + value.lastname,
+          phone: value.phone,
+          knowledgeLevel: value.knowledgeLevel,
+          dateCreated: localDate,
+          registeredMedia: value.registeredMedia,
+          coinBalance: value.coinBalance,
+          view: (
+            <>
+              <Button>aaa</Button>
+            </>
+          ),
+        })
+      })
+      this.setState({ tableData: rows })
     })
   }
+
   render() {
+    console.log(this.state.tableData)
     return (
       <React.Fragment>
         <div className="page-content">
@@ -434,13 +456,13 @@ class Dashboard extends Component {
                       pagination={paginationFactory(pageOptions)}
                       keyField="id"
                       columns={columns}
-                      data={this.state.apiData}
+                      data={this.state.tableData}
                     >
                       {({ paginationProps, paginationTableProps }) => (
                         <ToolkitProvider
                           keyField="id"
                           columns={columns}
-                          data={this.state.apiData}
+                          data={this.state.tableData}
                           search
                         >
                           {toolkitProps => (
