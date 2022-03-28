@@ -28,42 +28,32 @@ import { apiGet } from "../../config/apiConfig"
 const columns = [
   {
     dataField: "id",
-    text: "Student ID",
+    text: "Application ID",
     sort: true,
   },
   {
     dataField: "name",
-    text: "Student Name",
+    text: "Applicant Name",
     sort: true,
   },
   {
-    dataField: "phone",
-    text: "Phone",
+    dataField: "interviewDate",
+    text: "Interview scheduled on",
     sort: true,
   },
   {
-    dataField: "knowledgeLevel",
-    text: "Level",
+    dataField: "interviewStartTime",
+    text: "Interview timing",
     sort: true,
   },
   {
-    dataField: "dateCreated",
-    text: "Joined On",
-    sort: true,
-  },
-  {
-    dataField: "registeredMedia",
-    text: "Registration Media",
-    sort: true,
-  },
-  {
-    dataField: "coinBalance",
-    text: "Coin Balance",
+    dataField: "interviewStatus",
+    text: "Application status",
     sort: true,
   },
   {
     dataField: "view",
-    text: "View Profile",
+    text: "Enter Result",
     sort: true,
   },
 ]
@@ -400,7 +390,7 @@ const selectRow = {
 
 const { SearchBar } = Search
 
-class StudentList extends Component {
+class InterviewList extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -410,7 +400,7 @@ class StudentList extends Component {
   }
 
   componentDidMount() {
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/interview_schedule"
     let resp = apiGet(url)
 
     resp.then(resp => {
@@ -419,14 +409,30 @@ class StudentList extends Component {
       resp.response.data.data.forEach((value, index) => {
         let date = new Date(value.dateCreated)
         let localDate = date.toLocaleString()
+        let status = ""
+        switch (value.interviewStatus) {
+          case 1:
+            status = "open"
+            break
+          case 2:
+            status = "Close"
+            break
+          case 3:
+            status = "Pending"
+            break
+          case 4:
+            status = "Rejected"
+            break
+          default:
+          // code block
+        }
+
         rows.push({
-          id: value.studentId,
-          name: value.firstname + " " + value.lastname,
-          phone: value.phone,
-          knowledgeLevel: value.knowledgeLevel,
-          dateCreated: localDate,
-          registeredMedia: value.registeredMedia,
-          coinBalance: value.coinBalance,
+          id: value.teacherId,
+          name: value.teacherName,
+          interviewDate: value.interviewDate,
+          interviewStartTime: value.interviewStartTime,
+          interviewStatus: status,
           view: (
             <>
               <Button>aaa</Button>
@@ -444,10 +450,10 @@ class StudentList extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Students List</title>
+            <title>Onden | Interview List</title>
           </MetaTags>
           <Container fluid>
-            <h4>Students List</h4>
+            <h4>INTERVIEWS</h4>
             <Row>
               <Col md={12}>
                 <Card className="mini-stats-wid">
@@ -531,4 +537,4 @@ class StudentList extends Component {
   }
 }
 
-export default StudentList
+export default InterviewList

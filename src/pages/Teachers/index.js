@@ -28,44 +28,50 @@ import { apiGet } from "../../config/apiConfig"
 const columns = [
   {
     dataField: "id",
-    text: "Student ID",
+    text: "Tutor ID",
     sort: true,
   },
   {
     dataField: "name",
-    text: "Student Name",
+    text: "Tutor Name",
     sort: true,
   },
+
   {
-    dataField: "phone",
-    text: "Phone",
-    sort: true,
-  },
-  {
-    dataField: "knowledgeLevel",
-    text: "Level",
+    dataField: "country",
+    text: "Country",
     sort: true,
   },
   {
     dataField: "dateCreated",
-    text: "Joined On",
+    text: "Join Date",
     sort: true,
   },
   {
-    dataField: "registeredMedia",
-    text: "Registration Media",
-    sort: true,
-  },
-  {
-    dataField: "coinBalance",
-    text: "Coin Balance",
+    dataField: "coinValue",
+    text: "Coin exchange ratio",
     sort: true,
   },
   {
     dataField: "view",
-    text: "View Profile",
+    text: "View profile",
     sort: true,
   },
+  //   {
+  //     dataField: "registeredMedia",
+  //     text: "Registration Media",
+  //     sort: true,
+  //   },
+  //   {
+  //     dataField: "coinBalance",
+  //     text: "Coin Balance",
+  //     sort: true,
+  //   },
+  //   {
+  //     dataField: "viewprofile",
+  //     text: "View Profile",
+  //     sort: true,
+  //   },
 ]
 
 // Table Data
@@ -373,8 +379,8 @@ const productData = [
 
 const defaultSorted = [
   {
-    dataField: "id",
-    order: "asc",
+    dataField: "firstname",
+    order: "desc",
   },
 ]
 
@@ -391,6 +397,7 @@ const sizePerPageList = [
   { text: "15", value: 15 },
   { text: "20", value: 20 },
   { text: "25", value: 25 },
+  { text: "All", value: productData.length },
 ]
 
 // Select All Button operation
@@ -400,7 +407,7 @@ const selectRow = {
 
 const { SearchBar } = Search
 
-class StudentList extends Component {
+class TeachersList extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -410,7 +417,7 @@ class StudentList extends Component {
   }
 
   componentDidMount() {
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/teachers_list"
     let resp = apiGet(url)
 
     resp.then(resp => {
@@ -420,13 +427,11 @@ class StudentList extends Component {
         let date = new Date(value.dateCreated)
         let localDate = date.toLocaleString()
         rows.push({
-          id: value.studentId,
+          id: value.teacherId,
           name: value.firstname + " " + value.lastname,
-          phone: value.phone,
-          knowledgeLevel: value.knowledgeLevel,
+          country: value.country,
           dateCreated: localDate,
-          registeredMedia: value.registeredMedia,
-          coinBalance: value.coinBalance,
+          coinValue: value.coinValue,
           view: (
             <>
               <Button>aaa</Button>
@@ -437,17 +442,15 @@ class StudentList extends Component {
       this.setState({ tableData: rows })
     })
   }
-
   render() {
-    console.log(this.state.tableData)
     return (
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Students List</title>
+            <title>Onden | Teachers List</title>
           </MetaTags>
           <Container fluid>
-            <h4>Students List</h4>
+            <h4>Teachers</h4>
             <Row>
               <Col md={12}>
                 <Card className="mini-stats-wid">
@@ -531,4 +534,4 @@ class StudentList extends Component {
   }
 }
 
-export default StudentList
+export default TeachersList
