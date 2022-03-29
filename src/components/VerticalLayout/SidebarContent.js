@@ -171,7 +171,7 @@ const SidebarContent = props => {
             </li>
             <li className="menu-title">{props.t("Master settings")} </li>
             <li>
-              <Link to="#" className=" ">
+              <Link to="/settings" className=" ">
                 <i className="bx bx-home"></i>
                 <span>{props.t("Application settings")}</span>
               </Link>
