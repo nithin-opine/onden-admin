@@ -17,6 +17,9 @@ import CoinWithDrawalRequest from "../pages/CoinWithdrawalRequest"
 import Reports from "pages/Reports"
 import LatestStudentReports from "pages/Reports/latestStudentReport"
 import LatestTutorReport from "pages/Reports/latestTutorReport"
+import ApplicationSettings from "../pages/ApplicationSettings"
+import PackageSettings from "../pages/ApplicationSettings/PackageSettings"
+import CoinvalueSettings from "../pages/ApplicationSettings/CoinValueSettings"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -34,6 +37,10 @@ const authProtectedRoutes = [
   { path: "/reports", component: Reports },
   { path: "/latest-student-reports", component: LatestStudentReports },
   { path: "/latest-tutor-reports", component: LatestTutorReport },
+  { path: "/settings", component: ApplicationSettings },
+  { path: "/package-settings", component: PackageSettings },
+  { path: "/coin-settings", component: CoinvalueSettings },
+
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
