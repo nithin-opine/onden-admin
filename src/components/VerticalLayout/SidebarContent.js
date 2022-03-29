@@ -150,7 +150,7 @@ const SidebarContent = props => {
             </li>
             <li className="menu-title">{props.t(" Coin withdrawals")} </li>
             <li>
-              <Link to="#" className=" ">
+              <Link to="/coin-list" className=" ">
                 <i className="bx bx-home"></i>
                 <span>{props.t("Open requests")}</span>
               </Link>
