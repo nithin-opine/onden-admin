@@ -14,6 +14,9 @@ import TeachersList from "../pages/Teachers"
 import ApplicationList from "../pages/Applications"
 import InterviewList from "../pages/Interviews"
 import CoinWithDrawalRequest from "../pages/CoinWithdrawalRequest"
+import Reports from "pages/Reports"
+import LatestStudentReports from "pages/Reports/latestStudentReport"
+import LatestTutorReport from "pages/Reports/latestTutorReport"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -28,6 +31,9 @@ const authProtectedRoutes = [
   { path: "/application-list", component: ApplicationList },
   { path: "/interview-list", component: InterviewList },
   { path: "/coin-list", component: CoinWithDrawalRequest },
+  { path: "/reports", component: Reports },
+  { path: "/latest-student-reports", component: LatestStudentReports },
+  { path: "/latest-tutor-reports", component: LatestTutorReport },
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
