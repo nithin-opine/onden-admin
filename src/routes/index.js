@@ -20,6 +20,7 @@ import LatestTutorReport from "pages/Reports/latestTutorReport"
 import ApplicationSettings from "../pages/ApplicationSettings"
 import PackageSettings from "../pages/ApplicationSettings/PackageSettings"
 import CoinvalueSettings from "../pages/ApplicationSettings/CoinValueSettings"
+import ResignationReports from "pages/Reports/resignationReport"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -37,6 +38,7 @@ const authProtectedRoutes = [
   { path: "/reports", component: Reports },
   { path: "/latest-student-reports", component: LatestStudentReports },
   { path: "/latest-tutor-reports", component: LatestTutorReport },
+  { path: "/resignation-report", component: ResignationReports },
   { path: "/settings", component: ApplicationSettings },
   { path: "/package-settings", component: PackageSettings },
   { path: "/coin-settings", component: CoinvalueSettings },
