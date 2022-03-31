@@ -12,6 +12,9 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Toast,
+  ToastHeader,
+  ToastBody,
   Table,
 } from "reactstrap"
 import { Link } from "react-router-dom"
@@ -25,7 +28,8 @@ import paginationFactory, {
 
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 import { BaseUrl } from "../../../config/BaseUrl"
-import { apiGet } from "../../../config/apiConfig"
+import { apiGet, apiPut } from "../../../config/apiConfig"
+import { AvForm, AvField } from "availity-reactstrap-validation"
 
 const columns = [
   {
@@ -391,9 +395,112 @@ class CoinvalueSettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isToggleTaost: false,
+      isModelOpen: false,
       apiData: [],
       tableData: [],
+      selectedRow: {},
+      toastData: {},
     }
+    this.handleValidSubmit = this.handleValidSubmit.bind(this)
+    this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.tog_standard = this.tog_standard.bind(this)
+    this.openModel = this.openModel.bind(this)
+    this.updateGrid = this.updateGrid.bind(this)
+    this.toggle_toast = this.toggle_toast.bind(this)
+  }
+
+  handleValidSubmit() {
+    let url =
+      BaseUrl.apiUrl.baseUrl +
+      "api/admin/settings/coin_value_setting/" +
+      this.state.selectedRow.id
+    let body = {
+      coinCount: this.state.selectedRow.count,
+      coinValue: this.state.selectedRow.defaultvalue,
+      coinCreditForSession: this.state.selectedRow.credited,
+      minimumCoinBalanceTeacher: this.state.selectedRow.minbalance,
+    }
+    let resp = apiPut(url, body)
+    resp.then(resp => {
+      console.log("resp is", resp)
+      this.setState({ toastData: resp.response.data }, () => {
+        console.log("toastData is", this.state.toastData)
+        if (resp.response.status == 200) {
+          this.tog_standard()
+          this.updateGrid()
+          this.toggle_toast()
+        } else {
+          this.toggle_toast()
+        }
+      })
+    })
+  }
+  toggle_toast() {
+    const currentState = this.state.isToggleTaost
+    this.setState(
+      {
+        isToggleTaost: !currentState,
+      },
+      () => {
+        setTimeout(() => this.setState({ isToggleTaost: false }), 5000)
+        console.log(this.state.isToggleTaost)
+      }
+    )
+  }
+  handleInvalidSubmit(event, errors, values) {
+    console.log("invalid")
+    this.setState({ email: values.email, error: true })
+  }
+  handleChange(e) {
+    let updatedname = e.target.name
+    let updatedvalue = e.target.value
+    this.setState(
+      prevState => ({
+        selectedRow: {
+          // object that we want to update
+          ...prevState.selectedRow, // keep all other key-value pairs
+          [updatedname]: updatedvalue, // update the value of specific key
+        },
+      }),
+      () => {
+        console.log(this.state.selectedRow)
+      }
+    )
+  }
+  updateGrid() {
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/settings/coin_value_setting"
+    let resp = apiGet(url)
+
+    resp.then(resp => {
+      console.log(resp)
+      const rows = []
+      resp.response.data.data.forEach((value, index) => {
+        let temp = {
+          id: value.id,
+          count: value.coinCount,
+          defaultvalue: value.coinValue,
+          credited: value.coinCreditForSession,
+          minbalance: value.minimumCoinBalanceTeacher,
+        }
+        rows.push({
+          id: value.id,
+          count: value.coinCount,
+          defaultvalue: value.coinValue,
+          credited: value.coinCreditForSession,
+          minbalance: value.minimumCoinBalanceTeacher,
+          view: (
+            <>
+              <Link to="#" onClick={() => this.openModel(temp)}>
+                Edit
+              </Link>
+            </>
+          ),
+        })
+      })
+      this.setState({ tableData: rows })
+    })
   }
 
   componentDidMount() {
@@ -404,14 +511,24 @@ class CoinvalueSettings extends Component {
       console.log(resp)
       const rows = []
       resp.response.data.data.forEach((value, index) => {
+        let temp = {
+          id: value.id,
+          count: value.coinCount,
+          defaultvalue: value.coinValue,
+          credited: value.coinCreditForSession,
+          minbalance: value.minimumCoinBalanceTeacher,
+        }
         rows.push({
+          id: value.id,
           count: value.coinCount,
           defaultvalue: value.coinValue,
           credited: value.coinCreditForSession,
           minbalance: value.minimumCoinBalanceTeacher,
           view: (
             <>
-              <Link to="#">Edit</Link>
+              <Link to="#" onClick={() => this.openModel(temp)}>
+                Edit
+              </Link>
             </>
           ),
         })
@@ -420,6 +537,23 @@ class CoinvalueSettings extends Component {
     })
   }
 
+  openModel(obj) {
+    this.setState({ selectedRow: obj }, () => {
+      this.tog_standard()
+    })
+  }
+
+  tog_standard() {
+    const currentState = this.state.isModelOpen
+    this.setState(
+      {
+        isModelOpen: !currentState,
+      },
+      () => {
+        console.log(this.state.isModelOpen)
+      }
+    )
+  }
   render() {
     console.log(this.state.tableData)
     return (
@@ -504,6 +638,88 @@ class CoinvalueSettings extends Component {
                     </PaginationProvider>
                   </CardBody>
                 </Card>
+                <Modal
+                  isOpen={this.state.isModelOpen}
+                  toggle={this.tog_standard}
+                  className="modal-sm modal-dialog-centered"
+                >
+                  <AvForm
+                    onValidSubmit={this.handleValidSubmit}
+                    onInvalidSubmit={this.handleInvalidSubmit}
+                  >
+                    <div className="modal-header">
+                      <h5 className="modal-title mt-0" id="myModalLabel">
+                        Edit Package
+                      </h5>
+                      <button
+                        type="button"
+                        onClick={this.tog_standard}
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <AvField
+                        name="count"
+                        label="Coin Count"
+                        value={this.state.selectedRow.count}
+                        onChange={this.handleChange}
+                        required
+                      />
+                      <AvField
+                        name="defaultvalue"
+                        label="Default Coin Value"
+                        type="number"
+                        value={this.state.selectedRow.defaultvalue}
+                        onChange={this.handleChange}
+                        required
+                      />
+                      <AvField
+                        name="credited"
+                        label="Coin Credited for each session"
+                        type="number"
+                        value={this.state.selectedRow.credited}
+                        onChange={this.handleChange}
+                        required
+                      />
+                      <AvField
+                        name="minbalance"
+                        label="Minimum Coin balance teacher"
+                        value={this.state.selectedRow.minbalance}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="modal-footer">
+                      <button type="submit" className="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div>
+                  </AvForm>
+                </Modal>
+
+                <div
+                  className={
+                    this.state.toastData.code == 200
+                      ? "bg-success position-fixed top-0 end-0 p-2 m-3"
+                      : "bg-danger position-fixed top-0 end-0 p-2 m-3"
+                  }
+                  style={{ zIndex: "1005" }}
+                >
+                  <Toast isOpen={this.state.isToggleTaost}>
+                    <ToastBody>
+                      <p className="toast-status">
+                        {this.state.toastData.status}
+                      </p>
+                      <span className="toast-msg">
+                        {this.state.toastData.data}
+                      </span>
+                    </ToastBody>
+                  </Toast>
+                </div>
               </Col>
             </Row>
           </Container>

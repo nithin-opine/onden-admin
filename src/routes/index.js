@@ -21,6 +21,8 @@ import ApplicationSettings from "../pages/ApplicationSettings"
 import PackageSettings from "../pages/ApplicationSettings/PackageSettings"
 import CoinvalueSettings from "../pages/ApplicationSettings/CoinValueSettings"
 import ResignationReports from "pages/Reports/resignationReport"
+import InterviewCalendar from "../pages/InterviewCalendar"
+import StudentProfile from "../pages/Students/StudentProfile"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -42,6 +44,8 @@ const authProtectedRoutes = [
   { path: "/settings", component: ApplicationSettings },
   { path: "/package-settings", component: PackageSettings },
   { path: "/coin-settings", component: CoinvalueSettings },
+  { path: "/calendar", component: InterviewCalendar },
+  { path: "/student-profile/:id", component: StudentProfile },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

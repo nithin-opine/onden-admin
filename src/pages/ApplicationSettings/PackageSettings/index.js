@@ -9,6 +9,9 @@ import {
   CardBody,
   Input,
   Modal,
+  Toast,
+  ToastHeader,
+  ToastBody,
   ModalHeader,
   ModalBody,
   ModalFooter,
@@ -403,16 +406,20 @@ class PackageSettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isToggleTaost: false,
       isModelOpen: false,
       apiData: [],
       tableData: [],
       selectedRow: {},
+      toastData: {},
     }
     this.handleValidSubmit = this.handleValidSubmit.bind(this)
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.tog_standard = this.tog_standard.bind(this)
     this.openModel = this.openModel.bind(this)
+    this.updateGrid = this.updateGrid.bind(this)
+    this.toggle_toast = this.toggle_toast.bind(this)
   }
   handleValidSubmit() {
     console.log("valid")
@@ -429,8 +436,36 @@ class PackageSettings extends Component {
     }
     let resp = apiPut(url, body)
     resp.then(resp => {
-      console.log(resp)
+      console.log("resp is", resp)
+      this.setState({ toastData: resp.response.data }, () => {
+        console.log("toastData is", this.state.toastData)
+        if (resp.response.status == 200) {
+          this.tog_standard()
+          this.updateGrid()
+          this.toggle_toast()
+        } else {
+          this.toggle_toast()
+        }
+      })
+      // console.log("resp is", resp)
+      // if (resp.response.status == 200) {
+      //   this.tog_standard()
+      //   this.updateGrid()
+      // }
     })
+  }
+
+  toggle_toast() {
+    const currentState = this.state.isToggleTaost
+    this.setState(
+      {
+        isToggleTaost: !currentState,
+      },
+      () => {
+        setTimeout(() => this.setState({ isToggleTaost: false }), 5000)
+        console.log(this.state.isToggleTaost)
+      }
+    )
   }
 
   handleInvalidSubmit(event, errors, values) {
@@ -452,6 +487,41 @@ class PackageSettings extends Component {
         console.log(this.state.selectedRow)
       }
     )
+  }
+  updateGrid() {
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/settings/packages"
+    let resp = apiGet(url)
+
+    resp.then(resp => {
+      console.log(resp)
+      const rows = []
+      resp.response.data.data.forEach((value, index) => {
+        let tempState = {
+          id: value.id,
+          name: value.packageName,
+          amount: value.packageAmount,
+          coins: value.coinsToBeCredited,
+          totalminutes: value.durationMinutes,
+          expiry: value.usageLimit,
+        }
+        rows.push({
+          id: value.id,
+          name: value.packageName,
+          amount: value.packageAmount,
+          coins: value.coinsToBeCredited,
+          totalminutes: value.durationMinutes,
+          expiry: value.usageLimit,
+          view: (
+            <>
+              <Link to="#" onClick={() => this.openModel(tempState)}>
+                Edit
+              </Link>
+            </>
+          ),
+        })
+      })
+      this.setState({ tableData: rows })
+    })
   }
   componentDidMount() {
     let url = BaseUrl.apiUrl.baseUrl + "api/admin/settings/packages"
@@ -590,6 +660,7 @@ class PackageSettings extends Component {
                 <Modal
                   isOpen={this.state.isModelOpen}
                   toggle={this.tog_standard}
+                  className="modal-sm modal-dialog-centered"
                 >
                   <AvForm
                     onValidSubmit={this.handleValidSubmit}
@@ -650,12 +721,31 @@ class PackageSettings extends Component {
                       />
                     </div>
                     <div className="modal-footer">
-                      <button type="submit" className="btn btn-primary ">
+                      <button type="submit" className="btn btn-primary">
                         Save changes
                       </button>
                     </div>
                   </AvForm>
                 </Modal>
+                <div
+                  className={
+                    this.state.toastData.code == 200
+                      ? "bg-success position-fixed top-0 end-0 p-2 m-3"
+                      : "bg-danger position-fixed top-0 end-0 p-2 m-3"
+                  }
+                  style={{ zIndex: "1005" }}
+                >
+                  <Toast isOpen={this.state.isToggleTaost}>
+                    <ToastBody>
+                      <p className="toast-status">
+                        {this.state.toastData.status}
+                      </p>
+                      <span className="toast-msg">
+                        {this.state.toastData.data}
+                      </span>
+                    </ToastBody>
+                  </Toast>
+                </div>
               </Col>
             </Row>
           </Container>

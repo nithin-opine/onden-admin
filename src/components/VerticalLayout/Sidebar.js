@@ -1,21 +1,21 @@
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types"
+import React from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
 
 //i18n
-import { withTranslation } from "react-i18next";
-import SidebarContent from "./SidebarContent";
+import { withTranslation } from "react-i18next"
+import SidebarContent from "./SidebarContent"
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-import logo from "../../assets/images/logo.svg";
-import logoLightPng from "../../assets/images/logo-light.png";
-import logoLightSvg from "../../assets/images/logo-light.svg";
-import logoDark from "../../assets/images/logo-dark.png";
+import logo from "../../assets/images/logo.svg"
+import logoLightPng from "../../assets/images/logo-light.png"
+import logoLightSvg from "../../assets/images/logo-light.svg"
+import ondenLogo from "../../assets/images/logo-light1.png"
+import logoDark from "../../assets/images/logo-dark.png"
 
 const Sidebar = props => {
-
   return (
     <React.Fragment>
       <div className="vertical-menu">

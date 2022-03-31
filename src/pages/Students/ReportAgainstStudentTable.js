@@ -15,7 +15,6 @@ import {
   Table,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
-import { Link } from "react-router-dom"
 import paginationFactory, {
   PaginationProvider,
   PaginationListStandalone,
@@ -29,42 +28,22 @@ import { apiGet } from "../../config/apiConfig"
 const columns = [
   {
     dataField: "id",
-    text: "Student ID",
+    text: "Report ID",
     sort: true,
   },
   {
-    dataField: "name",
-    text: "Student Name",
+    dataField: "date",
+    text: "Date",
     sort: true,
   },
   {
-    dataField: "phone",
-    text: "Phone",
+    dataField: "tutor",
+    text: "Tutor",
     sort: true,
   },
   {
-    dataField: "knowledgeLevel",
-    text: "Level",
-    sort: true,
-  },
-  {
-    dataField: "dateCreated",
-    text: "Joined On",
-    sort: true,
-  },
-  {
-    dataField: "registeredMedia",
-    text: "Registration Media",
-    sort: true,
-  },
-  {
-    dataField: "coinBalance",
-    text: "Coin Balance",
-    sort: true,
-  },
-  {
-    dataField: "view",
-    text: "View Profile",
+    dataField: "comment",
+    text: "Comment",
     sort: true,
   },
 ]
@@ -401,7 +380,7 @@ const selectRow = {
 
 const { SearchBar } = Search
 
-class StudentList extends Component {
+class ReportAgainstStudent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -411,127 +390,101 @@ class StudentList extends Component {
   }
 
   componentDidMount() {
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
-    let resp = apiGet(url)
-
-    resp.then(resp => {
-      console.log(resp)
-      const rows = []
-      resp.response.data.data.forEach((value, index) => {
-        let date = new Date(value.dateCreated)
-        let localDate = date.toLocaleString()
-        rows.push({
-          id: value.studentId,
-          name: value.firstname + " " + value.lastname,
-          phone: value.phone,
-          knowledgeLevel: value.knowledgeLevel,
-          dateCreated: localDate,
-          registeredMedia: value.registeredMedia,
-          coinBalance: value.coinBalance,
-          view: (
-            <>
-              <Link to={`/student-profile/${value.id}`} className="tableBtn">
-                View profile
-              </Link>
-            </>
-          ),
-        })
-      })
-      this.setState({ tableData: rows })
-    })
+    // let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
+    // let resp = apiGet(url)
+    // resp.then(resp => {
+    //   console.log(resp)
+    //   const rows = []
+    //   resp.response.data.data.forEach((value, index) => {
+    //     let date = new Date(value.dateCreated)
+    //     let localDate = date.toLocaleString()
+    //     rows.push({
+    //       id: value.studentId,
+    //       name: value.firstname + " " + value.lastname,
+    //       phone: value.phone,
+    //       knowledgeLevel: value.knowledgeLevel,
+    //       dateCreated: localDate,
+    //       registeredMedia: value.registeredMedia,
+    //       coinBalance: value.coinBalance,
+    //     })
+    //   })
+    //   this.setState({ tableData: rows })
+    // })
   }
-
   render() {
-    console.log(this.state.tableData)
     return (
       <React.Fragment>
-        <div className="page-content">
-          <MetaTags>
-            <title>Onden | Students List</title>
-          </MetaTags>
-          <Container fluid>
-            <h4>Students List</h4>
-            <Row>
-              <Col md={12}>
-                <Card className="mini-stats-wid">
-                  <CardBody>
-                    <PaginationProvider
-                      pagination={paginationFactory(pageOptions)}
-                      keyField="id"
-                      columns={columns}
-                      data={this.state.tableData}
-                    >
-                      {({ paginationProps, paginationTableProps }) => (
-                        <ToolkitProvider
-                          keyField="id"
-                          columns={columns}
-                          data={this.state.tableData}
-                          search
-                        >
-                          {toolkitProps => (
-                            <React.Fragment>
-                              <Row className="mb-2">
-                                <Col md="4">
-                                  <div className="search-box me-2 mb-2 d-inline-block">
-                                    <div className="position-relative">
-                                      <SearchBar
-                                        {...toolkitProps.searchProps}
-                                      />
-                                      <i className="bx bx-search-alt search-icon" />
-                                    </div>
-                                  </div>
-                                </Col>
-                              </Row>
+        <Row>
+          <Col md={12}>
+            <PaginationProvider
+              pagination={paginationFactory(pageOptions)}
+              keyField="id"
+              columns={columns}
+              data={this.state.tableData}
+            >
+              {({ paginationProps, paginationTableProps }) => (
+                <ToolkitProvider
+                  keyField="id"
+                  columns={columns}
+                  data={this.state.tableData}
+                  search
+                >
+                  {toolkitProps => (
+                    <React.Fragment>
+                      <Row className="mb-2">
+                        <Col md="4">
+                          <div className="search-box me-2 mb-2 d-inline-block">
+                            <div className="position-relative">
+                              <SearchBar {...toolkitProps.searchProps} />
+                              <i className="bx bx-search-alt search-icon" />
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
 
-                              <Row>
-                                <Col xl="12">
-                                  <div className="table-responsive">
-                                    <BootstrapTable
-                                      keyField={"id"}
-                                      responsive
-                                      bordered={false}
-                                      striped={false}
-                                      defaultSorted={defaultSorted}
-                                      selectRow={selectRow}
-                                      classes={
-                                        "table align-middle table-nowrap table-striped striped table-borderd"
-                                      }
-                                      headerWrapperClasses={"thead-light"}
-                                      {...toolkitProps.baseProps}
-                                      {...paginationTableProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
+                      <Row>
+                        <Col xl="12">
+                          <div className="table-responsive">
+                            <BootstrapTable
+                              keyField={"id"}
+                              responsive
+                              bordered={false}
+                              striped={false}
+                              defaultSorted={defaultSorted}
+                              //   selectRow={selectRow}
+                              classes={
+                                "table table-bordered table-striped dataTable"
+                              }
+                              headerWrapperClasses={"thead-light"}
+                              {...toolkitProps.baseProps}
+                              {...paginationTableProps}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
 
-                              <Row className="align-items-md-center mt-30">
-                                <Col className="inner-custom-pagination d-flex">
-                                  <div className="d-inline">
-                                    <SizePerPageDropdownStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                  <div className="text-md-right ms-auto">
-                                    <PaginationListStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
-                            </React.Fragment>
-                          )}
-                        </ToolkitProvider>
-                      )}
-                    </PaginationProvider>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+                      <Row className="align-items-md-center mt-30">
+                        <Col className="inner-custom-pagination d-flex">
+                          <div className="d-inline">
+                            <SizePerPageDropdownStandalone
+                              {...paginationProps}
+                            />
+                          </div>
+                          <div className="text-md-right ms-auto">
+                            <PaginationListStandalone {...paginationProps} />
+                          </div>
+                        </Col>
+                      </Row>
+                    </React.Fragment>
+                  )}
+                </ToolkitProvider>
+              )}
+            </PaginationProvider>
+          </Col>
+        </Row>
       </React.Fragment>
     )
   }
 }
 
-export default StudentList
+export default ReportAgainstStudent
