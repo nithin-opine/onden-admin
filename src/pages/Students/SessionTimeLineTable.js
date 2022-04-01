@@ -389,27 +389,10 @@ const { SearchBar } = Search
 class SessionTimeLineTable extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      apiData: [],
-      tableData: [],
-    }
+    this.state = {}
   }
-  componentDidMount() {
-    let rows = []
-    this.props.data.forEach((value, index) => {
-      let temp = {
-        sessionNumber: value.sessionNumber,
-        sessionDate: value.sessionDate + " " + value.startTime,
-        teacherFirstName: value.teacherFirstName + " " + value.teacherLastName,
-        sessionDuration: value.sessionDuration,
-        disputeStatus: value.disputeStatus == 1 ? value.disputeReason : "",
-      }
-      rows.push(temp)
-    })
-    this.setState({ tableData: rows })
-  }
+
   render() {
-    console.log("timeline", this.state.tableData)
     return (
       <React.Fragment>
         <Row>
@@ -418,13 +401,13 @@ class SessionTimeLineTable extends Component {
               pagination={paginationFactory(pageOptions)}
               keyField="id"
               columns={columns}
-              data={this.state.tableData}
+              data={this.props.data}
             >
               {({ paginationProps, paginationTableProps }) => (
                 <ToolkitProvider
                   keyField="id"
                   columns={columns}
-                  data={this.state.tableData}
+                  data={this.props.data}
                   search
                 >
                   {toolkitProps => (

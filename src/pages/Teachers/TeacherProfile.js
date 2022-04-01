@@ -28,28 +28,32 @@ import { Link } from "react-router-dom"
 import classnames from "classnames"
 import avatar3 from "../../assets/images/users/avatar-3.jpg"
 import SessionTimeLineTable from "./SessionTimeLineTable"
-import CoinPurchaseHistory from "./CoinPurchaseHistoryTable"
-import ReportAgainstStudent from "./ReportAgainstStudentTable"
+import CoinWithdrawalHistory from "./CoinWithdrawalHistoryTable"
+import ReportAgainstTutor from "./ReportAgainstTutorTable"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet, apiPut } from "../../config/apiConfig"
 import { AvForm, AvField } from "availity-reactstrap-validation"
-class StudentProfile extends Component {
+
+class TeacherProfile extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isToggleTaost: false,
       isModelOpen: false,
+      isModelOpen1: false,
       activeTab1: "1",
       details: {},
       sessionTimeLine: [],
       selectedRow: {},
       sessionTimeLineData: [],
-      coinPurchaseHistory: [],
-      coinPurchaseHistoryData: [],
+      coinWidthdrawalHistory: [],
+      coinWidthdrawalHistoryData: [],
       toastData: {},
     }
     this.tog_standard = this.tog_standard.bind(this)
+    this.tog_standard1 = this.tog_standard1.bind(this)
     this.handleValidSubmit = this.handleValidSubmit.bind(this)
+    this.handleValidSubmit1 = this.handleValidSubmit1.bind(this)
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.updateGrid = this.updateGrid.bind(this)
@@ -78,10 +82,21 @@ class StudentProfile extends Component {
       }
     )
   }
+  tog_standard1() {
+    const currentState = this.state.isModelOpen1
+    this.setState(
+      {
+        isModelOpen1: !currentState,
+      },
+      () => {
+        console.log(this.state.isModelOpen1)
+      }
+    )
+  }
   handleValidSubmit() {
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/add_coins_to_wallet"
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/reset_teacher_wallet"
     let body = {
-      studentId: this.state.details.id,
+      teacherId: this.state.details.id,
       coinBalance: this.state.selectedRow.coinbalance,
     }
     let resp = apiPut(url, body)
@@ -91,6 +106,28 @@ class StudentProfile extends Component {
         console.log("toastData is", this.state.toastData)
         if (resp.response.status == 200) {
           this.tog_standard()
+          this.updateGrid()
+          this.toggle_toast()
+        } else {
+          this.toggle_toast()
+        }
+      })
+    })
+  }
+  handleValidSubmit1() {
+    let url =
+      BaseUrl.apiUrl.baseUrl + "api/admin/teacher/set_teacher_coin_ratio"
+    let body = {
+      id: this.state.details.id.toString(),
+      coinValue: this.state.selectedRow.coinRatio,
+    }
+    let resp = apiPut(url, body)
+    resp.then(resp => {
+      console.log("respasdasdasd is", resp)
+      this.setState({ toastData: resp.response.data }, () => {
+        console.log("toastData is", this.state.toastData)
+        if (resp.response.status == 200) {
+          this.tog_standard1()
           this.updateGrid()
           this.toggle_toast()
         } else {
@@ -127,7 +164,7 @@ class StudentProfile extends Component {
   updateGrid() {
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/student/student_profile/" +
+      "api/admin/teacher/teacher_profile/" +
       this.props.match.params.id
 
     let resp = apiGet(url)
@@ -137,7 +174,7 @@ class StudentProfile extends Component {
         {
           details: resp.response.data.data,
           sessionTimeLine: resp.response.data.data.sessionList,
-          coinPurchaseHistory: resp.response.data.data.purchaseHistoryList,
+          coinWidthdrawalHistory: resp.response.data.data.coinWithdrawalList,
         },
         () => {
           console.log("details is", this.state.details)
@@ -147,30 +184,43 @@ class StudentProfile extends Component {
             let temp = {
               sessionNumber: value.sessionNumber,
               sessionDate: value.sessionDate + " " + value.startTime,
-              teacherFirstName:
-                value.teacherFirstName + " " + value.teacherLastName,
+              studentFirstName:
+                value.studentFirstName + " " + value.studentLastName,
               sessionDuration: value.sessionDuration,
               disputeStatus:
                 value.disputeStatus == 1 ? value.disputeReason : "No disputes",
             }
             sessionRows.push(temp)
           })
-          this.state.coinPurchaseHistory.forEach((value, index) => {
+          this.state.coinWidthdrawalHistory.forEach((value, index) => {
+            let status = ""
+            switch (value.paymentRequestStatus) {
+              case 1:
+                status = "open"
+                break
+              case 2:
+                status = "Close"
+                break
+              case 3:
+                status = "Pending"
+                break
+              case 4:
+                status = "Rejected"
+                break
+              default:
+              // code block
+            }
             let coinhistory = {
-              id: value.id,
-              packagePurchasedOn: value.packagePurchasedOn,
-              packageName: value.packageName,
-              packagePaymentStatus:
-                value.packagePaymentStatus == 1
-                  ? "Payment Verified"
-                  : "Payment Not verified",
-              packageExpiresOn: value.packageExpiresOn,
+              paymentTranferRequestedOn: value.paymentTranferRequestedOn,
+              amountToBeTransferred: value.amountToBeTransferred,
+              paymentRequestStatus: status,
+              paymentTranferredOn: value.paymentTranferredOn,
             }
             coinRows.push(coinhistory)
           })
 
           this.setState({ sessionTimeLineData: sessionRows })
-          this.setState({ coinPurchaseHistoryData: coinRows })
+          this.setState({ coinWidthdrawalHistoryData: coinRows })
         }
       )
     })
@@ -178,7 +228,7 @@ class StudentProfile extends Component {
   componentDidMount() {
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/student/student_profile/" +
+      "api/admin/teacher/teacher_profile/" +
       this.props.match.params.id
 
     let resp = apiGet(url)
@@ -188,7 +238,7 @@ class StudentProfile extends Component {
         {
           details: resp.response.data.data,
           sessionTimeLine: resp.response.data.data.sessionList,
-          coinPurchaseHistory: resp.response.data.data.purchaseHistoryList,
+          coinWidthdrawalHistory: resp.response.data.data.coinWithdrawalList,
         },
         () => {
           console.log("details is", this.state.details)
@@ -198,30 +248,43 @@ class StudentProfile extends Component {
             let temp = {
               sessionNumber: value.sessionNumber,
               sessionDate: value.sessionDate + " " + value.startTime,
-              teacherFirstName:
-                value.teacherFirstName + " " + value.teacherLastName,
+              studentFirstName:
+                value.studentFirstName + " " + value.studentLastName,
               sessionDuration: value.sessionDuration,
               disputeStatus:
                 value.disputeStatus == 1 ? value.disputeReason : "No disputes",
             }
             sessionRows.push(temp)
           })
-          this.state.coinPurchaseHistory.forEach((value, index) => {
+          this.state.coinWidthdrawalHistory.forEach((value, index) => {
+            let status = ""
+            switch (value.paymentRequestStatus) {
+              case 1:
+                status = "open"
+                break
+              case 2:
+                status = "Close"
+                break
+              case 3:
+                status = "Pending"
+                break
+              case 4:
+                status = "Rejected"
+                break
+              default:
+              // code block
+            }
             let coinhistory = {
-              id: value.id,
-              packagePurchasedOn: value.packagePurchasedOn,
-              packageName: value.packageName,
-              packagePaymentStatus:
-                value.packagePaymentStatus == 1
-                  ? "Payment Verified"
-                  : "Payment Not verified",
-              packageExpiresOn: value.packageExpiresOn,
+              paymentTranferRequestedOn: value.paymentTranferRequestedOn,
+              amountToBeTransferred: value.amountToBeTransferred,
+              paymentRequestStatus: status,
+              paymentTranferredOn: value.paymentTranferredOn,
             }
             coinRows.push(coinhistory)
           })
 
           this.setState({ sessionTimeLineData: sessionRows })
-          this.setState({ coinPurchaseHistoryData: coinRows })
+          this.setState({ coinWidthdrawalHistoryData: coinRows })
         }
       )
     })
@@ -231,10 +294,10 @@ class StudentProfile extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Student-profile</title>
+            <title>Onden | Tutor-profile</title>
           </MetaTags>
           <Container fluid>
-            <h4>Student Profile</h4>
+            <h4>Tutor Profile</h4>
             <Row>
               <Col xl="4">
                 <Card className="withProfile mt-4">
@@ -255,39 +318,25 @@ class StudentProfile extends Component {
                           <tr>
                             <th scope="row">Full Name :</th>
                             <td>
-                              {this.state.details.studentFirstName}{" "}
-                              {this.state.details.studentLastName}
+                              {this.state.details.teacherFirstName}{" "}
+                              {this.state.details.teacherLastName}
                             </td>
                           </tr>
                           <tr>
-                            <th scope="row">Nick Name :</th>
-                            <td>{this.state.details.nickName}</td>
+                            <th scope="row">Country :</th>
+                            <td>{this.state.details.country}</td>
                           </tr>
                           <tr>
-                            <th scope="row">Age :</th>
-                            <td>{this.state.details.age}</td>
+                            <th scope="row">Native language :</th>
+                            <td>{this.state.details.nativeLanguage}</td>
                           </tr>
                           <tr>
-                            <th scope="row">Level:</th>
+                            <th scope="row">Staff from:</th>
+                            <td>{this.state.details.staffFrom}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Level :</th>
                             <td>{this.state.details.level}</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">Mobile :</th>
-                            <td>
-                              {this.state.details.mobile}
-                              <span
-                                className={
-                                  this.state.details.isMobileVerified == 1
-                                    ? "verified"
-                                    : "unverified"
-                                }
-                              >
-                                <i className="bx bx-check"></i>{" "}
-                                {this.state.details.isMobileVerified == 1
-                                  ? "Verified"
-                                  : "Not verified"}
-                              </span>
-                            </td>
                           </tr>
                           <tr>
                             <th scope="row">E-mail :</th>
@@ -314,10 +363,20 @@ class StudentProfile extends Component {
                 </Card>
                 <Card>
                   <CardBody>
-                    <Row className="profileActions ">
+                    <Row className="profileActions">
                       <Col md={12} onClick={this.tog_standard}>
                         <i className="fas fa-coins"></i>
                         <span className="ss">Edit Coin Balance</span>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardBody>
+                    <Row className="profileActions ">
+                      <Col md={12} onClick={this.tog_standard1}>
+                        <i className="bx bx-yen"></i>
+                        <span className="ss">Edit coin exchange ratio</span>
                       </Col>
                     </Row>
                   </CardBody>
@@ -328,19 +387,19 @@ class StudentProfile extends Component {
                 <Row>
                   <MiniCards
                     title="Completed Sessions"
-                    text={this.state.details.completedSessions}
+                    text={this.state.details.completedSessions + " sessions"}
                     iconClass="bx-check-circle"
                   />
                   <MiniCards
                     title="Scheduled Sessions"
-                    text={this.state.details.scheduledSessions}
+                    text={this.state.details.scheduledSessions + " sessions"}
                     iconClass="bx-hourglass"
                   />
                   <MiniCards
                     title="Coin balance"
                     text={
                       null != this.state.details.coinBalance
-                        ? this.state.details.coinBalance.toString()
+                        ? this.state.details.coinBalance.toString() + " coins"
                         : ""
                     }
                     iconClass="bx-package"
@@ -357,8 +416,8 @@ class StudentProfile extends Component {
                             className="rounded avatar-sm"
                             src={
                               null !=
-                              this.state.details.upcomingSessionTeacherImage
-                                ? this.state.details.upcomingSessionTeacherImage
+                              this.state.details.upcomingSessionStudentImage
+                                ? this.state.details.upcomingSessionStudentImage
                                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                             }
                             alt="Generic placeholder image"
@@ -367,15 +426,15 @@ class StudentProfile extends Component {
                         <div className="upSessionInfo">
                           <h5>
                             {null != this.state.details.upcomingSessionDate &&
-                            null != this.state.details.upcomingSessionTime
+                            null != this.state.details.upcomingSessionDate
                               ? this.state.details.upcomingSessionDate +
                                 " " +
                                 this.state.details.upcomingSessionTime
                               : "No sessions found"}
                           </h5>
                           <p className="mb-0">
-                            {null != this.state.details.upcomingSessionTeacher
-                              ? this.state.details.upcomingSessionTeacher
+                            {null != this.state.details.upcomingSessionStudent
+                              ? this.state.details.upcomingSessionStudent
                               : ""}
                           </p>
                         </div>
@@ -392,8 +451,8 @@ class StudentProfile extends Component {
                             className="rounded avatar-sm"
                             src={
                               null !=
-                              this.state.details.previousSessionTeacherImage
-                                ? this.state.details.previousSessionTeacherImage
+                              this.state.details.previousSessionStudentImage
+                                ? this.state.details.previousSessionStudentImage
                                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                             }
                             alt="Generic placeholder image"
@@ -409,8 +468,8 @@ class StudentProfile extends Component {
                               : "No sessions found"}
                           </h5>
                           <p className="mb-0">
-                            {null != this.state.details.previousSessionTeacher
-                              ? this.state.details.previousSessionTeacher
+                            {null != this.state.details.previousSessionStudent
+                              ? this.state.details.previousSessionStudent
                               : ""}
                           </p>
                         </div>
@@ -479,8 +538,8 @@ class StudentProfile extends Component {
                           <TabPane tabId="2">
                             <Row>
                               <Col sm="12">
-                                <CoinPurchaseHistory
-                                  data={this.state.coinPurchaseHistoryData}
+                                <CoinWithdrawalHistory
+                                  data={this.state.coinWidthdrawalHistoryData}
                                 />
                               </Col>
                             </Row>
@@ -488,7 +547,7 @@ class StudentProfile extends Component {
                           <TabPane tabId="3">
                             <Row>
                               <Col sm="12">
-                                <ReportAgainstStudent />
+                                <ReportAgainstTutor />
                               </Col>
                             </Row>
                           </TabPane>
@@ -535,6 +594,51 @@ class StudentProfile extends Component {
                         </div>
                       </AvForm>
                     </Modal>
+                    <Modal
+                      isOpen={this.state.isModelOpen1}
+                      toggle={this.tog_standard1}
+                      className="modal-sm modal-dialog-centered"
+                    >
+                      <AvForm
+                        onValidSubmit={this.handleValidSubmit1}
+                        onInvalidSubmit={this.handleInvalidSubmit}
+                      >
+                        <div className="modal-header">
+                          <h5 className="modal-title mt-0" id="myModalLabel">
+                            Edit coin exchange ratio
+                          </h5>
+                          <button
+                            type="button"
+                            onClick={this.tog_standard1}
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <p>
+                            Current exchange ratio is{" "}
+                            {this.state.details.coinRatio}
+                          </p>
+                          <AvField
+                            name="coinRatio"
+                            label="New exchange ratio"
+                            placeholder="Enter ratio"
+                            value={this.state.selectedRow.coinRatio}
+                            onChange={this.handleChange}
+                            type="number"
+                            required
+                          />
+                        </div>
+                        <div className="modal-footer">
+                          <button type="submit" className="btn btn-primary">
+                            Update
+                          </button>
+                        </div>
+                      </AvForm>
+                    </Modal>
                     <div
                       className={
                         this.state.toastData.code == 200
@@ -562,7 +666,7 @@ class StudentProfile extends Component {
         </div>
       </React.Fragment>
     )
-    StudentProfile.propTypes = {
+    TeacherProfile.propTypes = {
       match: PropTypes.shape({
         params: PropTypes.shape({
           id: PropTypes.string,
@@ -572,4 +676,4 @@ class StudentProfile extends Component {
   }
 }
 
-export default StudentProfile
+export default TeacherProfile
