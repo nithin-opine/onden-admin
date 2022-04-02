@@ -11,7 +11,7 @@ class Reports extends Component {
             <title>Onden | Reports list</title>
           </MetaTags>
           <Container fluid>
-            <h4>Data Reports</h4>
+            <h4>Data Report</h4>
             <Row>
               <Col md={12}>
                 <Card>
