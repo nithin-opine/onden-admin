@@ -23,14 +23,11 @@ import CoinvalueSettings from "../pages/ApplicationSettings/CoinValueSettings"
 import ResignationReports from "pages/Reports/resignationReport"
 import InterviewCalendar from "../pages/InterviewCalendar"
 import StudentProfile from "../pages/Students/StudentProfile"
-<<<<<<< HEAD
 import Interview from "pages/Applications/interview"
-=======
 import TeacherProfile from "../pages/Teachers/TeacherProfile"
 import InterviewApplication from "../pages/Interviews/interviewApplication"
 import SingleWithdrawalRequest from "../pages/CoinWithdrawalRequest/SingleWithdrawalRequest"
 import ResignationsList from "../pages/Resignations"
->>>>>>> 9a58e9476821a2a96f83d05f3f9dbbc89c41a71f
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -54,14 +51,10 @@ const authProtectedRoutes = [
   { path: "/coin-settings", component: CoinvalueSettings },
   { path: "/calendar", component: InterviewCalendar },
   { path: "/student-profile/:id", component: StudentProfile },
-<<<<<<< HEAD
-  { path: "/interview/:id", component: Interview },
-=======
   { path: "/teacher-profile/:id", component: TeacherProfile },
   { path: "/interview-application/:id/:tid", component: InterviewApplication },
   { path: "/withdrawals/:id", component: SingleWithdrawalRequest },
   { path: "/resignation-list", component: ResignationsList },
->>>>>>> 9a58e9476821a2a96f83d05f3f9dbbc89c41a71f
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
