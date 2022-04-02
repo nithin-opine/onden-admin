@@ -15,7 +15,6 @@ import {
   Table,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
-import { Link } from "react-router-dom"
 import paginationFactory, {
   PaginationProvider,
   PaginationListStandalone,
@@ -28,33 +27,23 @@ import { apiGet } from "../../config/apiConfig"
 
 const columns = [
   {
-    dataField: "id",
-    text: "Application ID",
+    dataField: "paymentTranferRequestedOn",
+    text: "Requested on",
     sort: true,
   },
   {
-    dataField: "name",
-    text: "Applicant Name",
+    dataField: "amountToBeTransferred",
+    text: "Requested amount",
     sort: true,
   },
   {
-    dataField: "interviewDate",
-    text: "Interview scheduled on",
+    dataField: "paymentRequestStatus",
+    text: "Payment request status",
     sort: true,
   },
   {
-    dataField: "interviewStartTime",
-    text: "Interview timing",
-    sort: true,
-  },
-  {
-    dataField: "interviewStatus",
-    text: "Application status",
-    sort: true,
-  },
-  {
-    dataField: "view",
-    text: "Enter Result",
+    dataField: "paymentTranferredOn",
+    text: "Processed on",
     sort: true,
   },
 ]
@@ -391,156 +380,89 @@ const selectRow = {
 
 const { SearchBar } = Search
 
-class InterviewList extends Component {
+class CoinWithdrawalHistory extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      apiData: [],
-      tableData: [],
-    }
-  }
-
-  componentDidMount() {
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/interview_schedule"
-    let resp = apiGet(url)
-
-    resp.then(resp => {
-      console.log(resp)
-      const rows = []
-      resp.response.data.data.forEach((value, index) => {
-        let date = new Date(value.dateCreated)
-        let localDate = date.toLocaleString()
-        let status = ""
-        switch (value.interviewStatus) {
-          case 1:
-            status = "open"
-            break
-          case 2:
-            status = "Close"
-            break
-          case 3:
-            status = "Pending"
-            break
-          case 4:
-            status = "Rejected"
-            break
-          default:
-          // code block
-        }
-
-        rows.push({
-          id: value.teacherId,
-          name: value.teacherName,
-          interviewDate: value.interviewDate,
-          interviewStartTime: value.interviewStartTime,
-          interviewStatus: status,
-          view: (
-            <>
-              <Link
-                to={`/interview-application/${value.id}/${value.teacherId}`}
-                className="tableBtn"
-              >
-                View application
-              </Link>
-            </>
-          ),
-        })
-      })
-      this.setState({ tableData: rows })
-    })
+    this.state = {}
   }
 
   render() {
-    console.log(this.state.tableData)
     return (
       <React.Fragment>
-        <div className="page-content">
-          <MetaTags>
-            <title>Onden | Interview List</title>
-          </MetaTags>
-          <Container fluid>
-            <h4>INTERVIEWS</h4>
-            <Row>
-              <Col md={12}>
-                <Card className="mini-stats-wid">
-                  <CardBody>
-                    <PaginationProvider
-                      pagination={paginationFactory(pageOptions)}
-                      keyField="id"
-                      columns={columns}
-                      data={this.state.tableData}
-                    >
-                      {({ paginationProps, paginationTableProps }) => (
-                        <ToolkitProvider
-                          keyField="id"
-                          columns={columns}
-                          data={this.state.tableData}
-                          search
-                        >
-                          {toolkitProps => (
-                            <React.Fragment>
-                              <Row className="mb-2">
-                                <Col md="4">
-                                  <div className="search-box me-2 mb-2 d-inline-block">
-                                    <div className="position-relative">
-                                      <SearchBar
-                                        {...toolkitProps.searchProps}
-                                      />
-                                      <i className="bx bx-search-alt search-icon" />
-                                    </div>
-                                  </div>
-                                </Col>
-                              </Row>
+        <Row>
+          <Col md={12}>
+            <PaginationProvider
+              pagination={paginationFactory(pageOptions)}
+              keyField="id"
+              columns={columns}
+              data={this.props.data}
+            >
+              {({ paginationProps, paginationTableProps }) => (
+                <ToolkitProvider
+                  keyField="id"
+                  columns={columns}
+                  data={this.props.data}
+                  search
+                >
+                  {toolkitProps => (
+                    <React.Fragment>
+                      <Row className="mb-2">
+                        <Col md="4">
+                          <div className="search-box me-2 mb-2 d-inline-block">
+                            <div className="position-relative">
+                              <SearchBar {...toolkitProps.searchProps} />
+                              <i className="bx bx-search-alt search-icon" />
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
 
-                              <Row>
-                                <Col xl="12">
-                                  <div className="table-responsive">
-                                    <BootstrapTable
-                                      keyField={"id"}
-                                      responsive
-                                      bordered={false}
-                                      striped={false}
-                                      defaultSorted={defaultSorted}
-                                      selectRow={selectRow}
-                                      classes={
-                                        "table align-middle table-nowrap table-striped striped table-borderd"
-                                      }
-                                      headerWrapperClasses={"thead-light"}
-                                      {...toolkitProps.baseProps}
-                                      {...paginationTableProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
+                      <Row>
+                        <Col xl="12">
+                          <div className="table-responsive">
+                            <BootstrapTable
+                              keyField={"id"}
+                              responsive
+                              bordered={false}
+                              striped={false}
+                              defaultSorted={defaultSorted}
+                              //   selectRow={selectRow}
+                              classes={
+                                "table table-bordered table-striped dataTable"
+                              }
+                              headerWrapperClasses={"thead-light"}
+                              {...toolkitProps.baseProps}
+                              {...paginationTableProps}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
 
-                              <Row className="align-items-md-center mt-30">
-                                <Col className="inner-custom-pagination d-flex">
-                                  <div className="d-inline">
-                                    <SizePerPageDropdownStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                  <div className="text-md-right ms-auto">
-                                    <PaginationListStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
-                            </React.Fragment>
-                          )}
-                        </ToolkitProvider>
-                      )}
-                    </PaginationProvider>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+                      <Row className="align-items-md-center mt-30">
+                        <Col className="inner-custom-pagination d-flex">
+                          <div className="d-inline">
+                            <SizePerPageDropdownStandalone
+                              {...paginationProps}
+                            />
+                          </div>
+                          <div className="text-md-right ms-auto">
+                            <PaginationListStandalone {...paginationProps} />
+                          </div>
+                        </Col>
+                      </Row>
+                    </React.Fragment>
+                  )}
+                </ToolkitProvider>
+              )}
+            </PaginationProvider>
+          </Col>
+        </Row>
       </React.Fragment>
     )
+    CoinWithdrawalHistory.propTypes = {
+      data: PropTypes.data,
+    }
   }
 }
 
-export default InterviewList
+export default CoinWithdrawalHistory

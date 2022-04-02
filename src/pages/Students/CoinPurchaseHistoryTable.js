@@ -32,22 +32,22 @@ const columns = [
     sort: true,
   },
   {
-    dataField: "date",
+    dataField: "packagePurchasedOn",
     text: "Date",
     sort: true,
   },
   {
-    dataField: "package",
+    dataField: "packageName",
     text: "Package",
     sort: true,
   },
   {
-    dataField: "payment",
+    dataField: "packagePaymentStatus",
     text: "Payment Verified",
     sort: true,
   },
   {
-    dataField: "expiry",
+    dataField: "packageExpiresOn",
     text: "Expiry",
     sort: true,
   },
@@ -388,34 +388,9 @@ const { SearchBar } = Search
 class CoinPurchaseHistory extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      apiData: [],
-      tableData: [],
-    }
+    this.state = {}
   }
 
-  componentDidMount() {
-    // let url = BaseUrl.apiUrl.baseUrl + "api/admin/student/students_list"
-    // let resp = apiGet(url)
-    // resp.then(resp => {
-    //   console.log(resp)
-    //   const rows = []
-    //   resp.response.data.data.forEach((value, index) => {
-    //     let date = new Date(value.dateCreated)
-    //     let localDate = date.toLocaleString()
-    //     rows.push({
-    //       id: value.studentId,
-    //       name: value.firstname + " " + value.lastname,
-    //       phone: value.phone,
-    //       knowledgeLevel: value.knowledgeLevel,
-    //       dateCreated: localDate,
-    //       registeredMedia: value.registeredMedia,
-    //       coinBalance: value.coinBalance,
-    //     })
-    //   })
-    //   this.setState({ tableData: rows })
-    // })
-  }
   render() {
     return (
       <React.Fragment>
@@ -425,13 +400,13 @@ class CoinPurchaseHistory extends Component {
               pagination={paginationFactory(pageOptions)}
               keyField="id"
               columns={columns}
-              data={this.state.tableData}
+              data={this.props.data}
             >
               {({ paginationProps, paginationTableProps }) => (
                 <ToolkitProvider
                   keyField="id"
                   columns={columns}
-                  data={this.state.tableData}
+                  data={this.props.data}
                   search
                 >
                   {toolkitProps => (
@@ -489,6 +464,9 @@ class CoinPurchaseHistory extends Component {
         </Row>
       </React.Fragment>
     )
+    CoinPurchaseHistory.propTypes = {
+      data: PropTypes.data,
+    }
   }
 }
 

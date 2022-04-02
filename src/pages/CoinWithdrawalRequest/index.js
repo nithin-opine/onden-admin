@@ -20,6 +20,7 @@ import paginationFactory, {
   PaginationListStandalone,
   SizePerPageDropdownStandalone,
 } from "react-bootstrap-table2-paginator"
+import { Link } from "react-router-dom"
 
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 import { BaseUrl } from "../../config/BaseUrl"
@@ -448,7 +449,9 @@ class CoinWithDrawalRequest extends Component {
 
           view: (
             <>
-              <Button>aaa</Button>
+              <Link to={`/withdrawals/${value.id}`} className="tableBtn">
+                Process
+              </Link>
             </>
           ),
         })

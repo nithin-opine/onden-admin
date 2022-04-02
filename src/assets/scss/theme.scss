@@ -162,7 +162,7 @@ span.flatpickr-weekday {
   }
 }
 .profileActions {
-  align-items: center;
+  cursor: pointer;
   i {
     font-size: 20px;
     margin-right: 0.75em;
@@ -172,6 +172,40 @@ span.flatpickr-weekday {
     font-size: 14px;
   }
 }
+.tutor-application{
+  .appCImg{
+    height: 15em;
+  width: 100%;
+  img{
+    height: 100%;
+  width: 100%;
+  object-fit: cover;
+  }
+  }
+  .appCname {
+    text-transform: capitalize;
+    font-size: 20px;
+  }
+  .formBtn button {
+    background: #eae6e6;
+    padding: 1em 3em;
+    margin-right: 1.5em;
+    border-radius: 5px;
+    display: inline-block;
+    color: #575555;
+    border: 1px solid #aeabab;
+  }
+}
+.conf{
+  background: #556ee6;
+padding: 10px 15px;
+font-weight: 600;
+border-radius: 5px;
+border: none;
+margin-top: 2em;
+color: #fff;
+}
+
 .upSessionInfo {
   h5 {
     font-size: 14px;

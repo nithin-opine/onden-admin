@@ -15,6 +15,8 @@ import {
   Table,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
+import { Link } from "react-router-dom"
+
 import paginationFactory, {
   PaginationProvider,
   PaginationListStandalone,
@@ -434,7 +436,9 @@ class TeachersList extends Component {
           coinValue: value.coinValue,
           view: (
             <>
-              <Button>aaa</Button>
+              <Link to={`/teacher-profile/${value.id}`} className="tableBtn">
+                View profile
+              </Link>
             </>
           ),
         })
