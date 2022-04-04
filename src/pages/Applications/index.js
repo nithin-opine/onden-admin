@@ -111,7 +111,7 @@ class ApplicationList extends Component {
           date: localDate,
           view: (
             <>
-              <a href="" className="">
+              <a href={"/interview/" + value.id} className="">
                 View application
               </a>
             </>

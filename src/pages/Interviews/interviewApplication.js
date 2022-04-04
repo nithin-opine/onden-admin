@@ -1,20 +1,107 @@
 import React, { Component } from "react"
 import MetaTags from "react-meta-tags"
-import { Container, Row, Col, Card, CardBody } from "reactstrap"
+import { Container, Card, Row, Col, CardBody, Modal } from "reactstrap"
 import { Link } from "react-router-dom"
 
 import { BaseUrl } from "../../config/BaseUrl"
-import { apiGet } from "../../config/apiConfig"
+import { apiGet, apiPut } from "../../config/apiConfig"
 import BootstrapTheme from "@fullcalendar/bootstrap"
 import { object } from "prop-types"
+import { AvForm, AvField } from "availity-reactstrap-validation"
+
+import { ToastContainer, toast } from "react-toastify"
+
+import "react-toastify/dist/ReactToastify.css"
 
 class InterviewApplication extends Component {
   constructor(props) {
     super(props)
     this.state = {
       details: {},
+      selectedRow: "",
+      disabled: false,
+      isModelOpen1: false,
     }
+    this.tog_standard = this.tog_standard.bind(this)
+    this.tog_standard1 = this.tog_standard1.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleValidSubmit = this.handleValidSubmit.bind(this)
+    this.rejectInterview = this.rejectInterview.bind(this)
   }
+  handleChange(e) {
+    let updatedname = e.target.name
+    let updatedvalue = e.target.value
+    this.setState({ selectedRow: updatedvalue })
+  }
+  tog_standard1() {
+    const currentState = this.state.isModelOpen1
+    this.setState(
+      {
+        isModelOpen1: !currentState,
+      },
+      () => {
+        console.log(this.state.isModelOpen1)
+      }
+    )
+  }
+  tog_standard() {
+    const currentState = this.state.isModelOpen
+    this.setState(
+      {
+        isModelOpen: !currentState,
+      },
+      () => {
+        console.log(this.state.isModelOpen)
+      }
+    )
+  }
+  handleValidSubmit() {
+    let url =
+      BaseUrl.apiUrl.baseUrl +
+      "api/admin/teacher/interview_schedule/" +
+      this.props.match.params.id
+    let body = {
+      teacherId: this.props.match.params.tid,
+      interviewType: "Telephone Interview",
+      interviewStatus: "3",
+      coinValue: this.state.selectedRow,
+    }
+    let resp = apiPut(url, body)
+    resp.then(resp => {
+      resp.response.data.code == 200
+        ? toast.success("Tutor successfully added", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+        : toast.error(resp.response.data.data, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+      resp.response.data.code == 200 ? this.setState({ disabled: true }) : ""
+      this.tog_standard()
+    })
+  }
+  rejectInterview() {
+    let url =
+      BaseUrl.apiUrl.baseUrl +
+      "api/admin/teacher/interview_schedule/" +
+      this.props.match.params.id
+    let body = {
+      teacherId: this.props.match.params.tid,
+      interviewStatus: "4",
+    }
+    let resp = apiPut(url, body)
+    resp.then(resp => {
+      resp.response.data.code == 200
+        ? toast.success("Rejected the application", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+        : toast.error(resp.response.data.data, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+      resp.response.data.code == 200 ? this.setState({ disabled: true }) : ""
+      this.tog_standard1()
+    })
+  }
+
   componentDidMount() {
     let url =
       BaseUrl.apiUrl.baseUrl +
@@ -30,6 +117,7 @@ class InterviewApplication extends Component {
     console.log("params", this.props)
     return (
       <React.Fragment>
+        <ToastContainer />
         <div className="page-content">
           <MetaTags>
             <title>Onden | Interview-Application</title>
@@ -139,13 +227,17 @@ class InterviewApplication extends Component {
                               className=""
                               data-toggle="modal"
                               data-target=".bs-example-modal-sm"
+                              onClick={this.tog_standard1}
+                              disabled={this.state.disabled}
                             >
                               Reject application
                             </button>
                             <button
                               className=""
                               data-toggle="modal"
-                              data-target=".bs-example-modal-sm"
+                              data-target=".bs-example-modal-md"
+                              onClick={this.tog_standard}
+                              disabled={this.state.disabled}
                             >
                               Accept tutor
                             </button>
@@ -157,6 +249,87 @@ class InterviewApplication extends Component {
                 </Card>
               </Col>
             </Row>
+            <Modal
+              isOpen={this.state.isModelOpen}
+              toggle={this.tog_standard}
+              className="modal-sm modal-dialog-centered"
+            >
+              <AvForm
+                onValidSubmit={this.handleValidSubmit}
+                onInvalidSubmit={this.handleInvalidSubmit}
+              >
+                <div className="modal-header">
+                  <div></div>
+
+                  <button
+                    type="button"
+                    onClick={this.tog_standard}
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <div className="modal-inner-header">
+                    Enter a coin exchange ratio for this tutor. You can later
+                    change this in the tutor`&apos;`s profile.
+                  </div>
+                  <AvField
+                    name="coinbalance"
+                    label="Coin balance"
+                    onChange={this.handleChange}
+                    type="number"
+                    required
+                  />
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={this.state.disabled}
+                  >
+                    Accept
+                  </button>
+                </div>
+              </AvForm>
+            </Modal>
+            <Modal
+              isOpen={this.state.isModelOpen1}
+              toggle={this.tog_standard1}
+              className="modal-sm modal-dialog-centered"
+            >
+              <div className="modal-header">
+                <div></div>
+
+                <button
+                  type="button"
+                  onClick={this.tog_standard1}
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="modal-inner-header">
+                  Do you really want to reject this application?
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn ">No</button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={this.state.disabled}
+                  onClick={this.rejectInterview}
+                >
+                  Yes
+                </button>
+              </div>
+            </Modal>
           </Container>
         </div>
       </React.Fragment>

@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import MetaTags from "react-meta-tags"
-import { Container, Card, Row, Col, CardBody } from "reactstrap"
+import { Container, Card, Row, Col, CardBody, Modal } from "reactstrap"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet } from "../../config/apiConfig"
+import { AvForm, AvField } from "availity-reactstrap-validation"
 
 class Interview extends Component {
   constructor(props) {
@@ -11,6 +12,18 @@ class Interview extends Component {
       apiData: [],
       tableData: [],
     }
+    this.tog_standard = this.tog_standard.bind(this)
+  }
+  tog_standard() {
+    const currentState = this.state.isModelOpen
+    this.setState(
+      {
+        isModelOpen: !currentState,
+      },
+      () => {
+        console.log(this.state.isModelOpen)
+      }
+    )
   }
   componentDidMount() {
     let url =
@@ -92,6 +105,46 @@ class Interview extends Component {
                 </Card>
               </Col>
             </Row>
+            <Modal
+              isOpen={this.state.isModelOpen}
+              toggle={this.tog_standard}
+              className="modal-sm modal-dialog-centered"
+            >
+              <AvForm
+                onValidSubmit={this.handleValidSubmit}
+                onInvalidSubmit={this.handleInvalidSubmit}
+              >
+                <div className="modal-header">
+                  <h5 className="modal-title mt-0" id="myModalLabel">
+                    Enter new wallet balance
+                  </h5>
+                  <button
+                    type="button"
+                    onClick={this.tog_standard}
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <AvField
+                    name="coinbalance"
+                    label="Coin balance"
+                    value={this.state.selectedRow.coinBalance}
+                    onChange={this.handleChange}
+                    type="number"
+                    required
+                  />
+                </div>
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-primary">
+                    Update
+                  </button>
+                </div>
+              </AvForm>
+            </Modal>
           </Container>
         </div>
       </React.Fragment>

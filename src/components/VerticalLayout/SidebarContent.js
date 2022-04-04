@@ -157,7 +157,7 @@ const SidebarContent = props => {
             </li>
             <li className="menu-title">{props.t("Resignations")} </li>
             <li>
-              <Link to="#" className=" ">
+              <Link to="/resignation-list" className=" ">
                 <i className="bx bx-home"></i>
                 <span>{props.t("Open requests")}</span>
               </Link>
@@ -179,7 +179,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Account settings")} </li>
             <li>
               <Link to="#" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-home"></i>vbnm,
                 <span>{props.t("Change password")}</span>
               </Link>
             </li>
