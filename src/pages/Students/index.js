@@ -61,6 +61,12 @@ const columns = [
     dataField: "coinBalance",
     text: "Coin Balance",
     sort: true,
+    sortFunc: (a, b, order, dataField, rowA, rowB) => {
+      if (order === "asc") {
+        return b - a
+      }
+      return a - b // desc
+    },
   },
   {
     dataField: "view",
@@ -415,11 +421,10 @@ class StudentList extends Component {
     let resp = apiGet(url)
 
     resp.then(resp => {
-      console.log(resp)
       const rows = []
       resp.response.data.data.forEach((value, index) => {
         let date = new Date(value.dateCreated)
-        let localDate = date.toLocaleString()
+        let localDate = date.toLocaleDateString()
         rows.push({
           id: value.studentId,
           name: value.firstname + " " + value.lastname,
