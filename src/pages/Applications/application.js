@@ -299,8 +299,13 @@ class Application extends Component {
                             Available time slots
                           </Col>
                           <Col md={9} className="mt-2">
-                            {this.state.timeArray.map(time => (
-                              <span className="daySpan bg-green">{time}</span>
+                            {this.state.timeArray.map((time, key) => (
+                              <span
+                                className="daySpan bg-green"
+                                key={"_li_" + key}
+                              >
+                                {time}
+                              </span>
                             ))}
                           </Col>
                         </Row>
