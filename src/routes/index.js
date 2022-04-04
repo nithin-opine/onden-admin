@@ -28,6 +28,8 @@ import TeacherProfile from "../pages/Teachers/TeacherProfile"
 import InterviewApplication from "../pages/Interviews/interviewApplication"
 import SingleWithdrawalRequest from "../pages/CoinWithdrawalRequest/SingleWithdrawalRequest"
 import ResignationsList from "../pages/Resignations"
+import ChangePassword from "../pages/ChangePassword"
+import Application from "../pages/Applications/application"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -55,6 +57,8 @@ const authProtectedRoutes = [
   { path: "/interview-application/:id/:tid", component: InterviewApplication },
   { path: "/withdrawals/:id", component: SingleWithdrawalRequest },
   { path: "/resignation-list", component: ResignationsList },
+  { path: "/change-password", component: ChangePassword },
+  { path: "/application/:id", component: Application },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
