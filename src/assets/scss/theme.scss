@@ -205,7 +205,19 @@ border: none;
 margin-top: 2em;
 color: #fff;
 }
-
+.daySpan {
+  padding: 5px;
+  margin-right: 1%;
+  min-width: 4em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid #c6c6c6;
+  margin-bottom: 2em;
+}
+.bg-green{
+  border-color: green;
+}
 .upSessionInfo {
   h5 {
     font-size: 14px;

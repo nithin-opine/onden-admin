@@ -4,7 +4,6 @@ import {
   Container,
   Row,
   Col,
-  Link,
   Button,
   Card,
   CardBody,
@@ -16,6 +15,7 @@ import {
   Table,
 } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
+import { Link } from "react-router-dom"
 import paginationFactory, {
   PaginationProvider,
   PaginationListStandalone,
@@ -111,9 +111,9 @@ class ApplicationList extends Component {
           date: localDate,
           view: (
             <>
-              <a href={"/interview/" + value.id} className="">
+              <Link to={"/application/" + value.id} className="tableBtn">
                 View application
-              </a>
+              </Link>
             </>
           ),
         })
