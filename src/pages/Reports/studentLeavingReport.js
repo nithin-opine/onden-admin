@@ -8,15 +8,15 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet } from "../../config/apiConfig"
 
-class LatestTutorReport extends Component {
+class StudentLeavingReports extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       columnDefs: [
         {
-          field: "teacherId",
-          headerName: "Tutor Id",
+          field: "studentId",
+          headerName: "Student Id",
           filter: "agMultiColumnFilter",
         },
         {
@@ -27,16 +27,6 @@ class LatestTutorReport extends Component {
         {
           field: "lastname",
           headerName: "Last Name",
-          filter: "agMultiColumnFilter",
-        },
-        {
-          field: "nickname",
-          headerName: "Nick Name",
-          filter: "agMultiColumnFilter",
-        },
-        {
-          field: "country",
-          headerName: "Country",
           filter: "agMultiColumnFilter",
         },
         {
@@ -55,7 +45,7 @@ class LatestTutorReport extends Component {
           filter: "agMultiColumnFilter",
         },
         {
-          field: "interviewSelectedDate",
+          field: "dateCreated",
           headerName: "Joined on",
           filter: "agMultiColumnFilter",
         },
@@ -78,19 +68,22 @@ class LatestTutorReport extends Component {
 
     const updateData = data => params.api.setRowData(data)
 
-    let url = BaseUrl.apiUrl.baseUrl + "api/admin/report/latest_teachers_list"
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/report/students_left_report"
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp => {
+      console.log(resp.response.data.data)
+      updateData(resp.response.data.data)
+    })
   }
   render() {
     return (
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Latest Tutor Reports</title>
+            <title>Onden | Students left</title>
           </MetaTags>
           <Container fluid>
-            <h4>LATEST TUTORS REPORT</h4>
+            <h4>STUDENTS LEAVING REPORT </h4>
             <Row>
               <Col md={12}>
                 <Card>
@@ -122,4 +115,4 @@ class LatestTutorReport extends Component {
   }
 }
 
-export default LatestTutorReport
+export default StudentLeavingReports

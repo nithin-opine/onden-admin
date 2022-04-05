@@ -497,6 +497,19 @@ color: #fff;
 background: #06162b;
 padding: 0 12em;
 }
+.slots{
+  input{
+    width: 10em;
+    margin-bottom: 1.5em;
+  
+  }
+  button{
+    padding: 4px 15px;
+    margin-left: 2em;
+    background: #644b4b;
+    border: none;
+  }
+}
 
 .loginBg{
   background-image: url("../ondenassets/Loginbg.jpg")!important;
@@ -506,6 +519,13 @@ padding: 0 12em;
   img{
     width: 5em;
 margin-top: 90%;
+  }
+}
+.filter{
+  input{
+    width: 100%;
+height: 3em;
+margin-bottom: 1em;
   }
 }
 

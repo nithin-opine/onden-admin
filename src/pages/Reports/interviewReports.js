@@ -8,7 +8,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet } from "../../config/apiConfig"
 
-class ResignationReports extends Component {
+class InterviewReports extends Component {
   constructor(props) {
     super(props)
 
@@ -23,32 +23,22 @@ class ResignationReports extends Component {
         },
         {
           field: "fname",
-          headerName: "First Name",
+          headerName: "Name",
           filter: "agMultiColumnFilter",
         },
         {
           field: "lname",
-          headerName: "Last Name",
+          headerName: "Interview Date",
           filter: "agMultiColumnFilter",
         },
         {
           field: "nickname",
-          headerName: "Nick Name",
+          headerName: "Interview Time",
           filter: "agMultiColumnFilter",
         },
         {
           field: "nickname",
-          headerName: "Phone Number",
-          filter: "agMultiColumnFilter",
-        },
-        {
-          field: "nickname",
-          headerName: "Email",
-          filter: "agMultiColumnFilter",
-        },
-        {
-          field: "nickname",
-          headerName: "Joined on",
+          headerName: "Interview Status",
           filter: "agMultiColumnFilter",
         },
       ],
@@ -77,12 +67,15 @@ class ResignationReports extends Component {
     const updateData = data => params.api.setRowData(data)
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
+      "api/admin/report/interview_report/{from}/{to}" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp => {
+      console.log(resp.response.data.data)
+      updateData(resp.response.data.data)
+    })
   }
 
   onGridReady = params => {
@@ -93,22 +86,25 @@ class ResignationReports extends Component {
 
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
+      "api/admin/settings/interview_time_slots" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp => {
+      console.log(resp.response.data.data)
+      updateData(resp.response.data.data)
+    })
   }
   render() {
     return (
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Resignation Reports</title>
+            <title>Onden | Interview Reports</title>
           </MetaTags>
           <Container fluid>
-            <h4>RESIGNATION REPORT</h4>
+            <h4>INTERVIEW REPORT</h4>
             <Row>
               <Col md={12}>
                 <Card>
@@ -180,4 +176,4 @@ class ResignationReports extends Component {
   }
 }
 
-export default ResignationReports
+export default InterviewReports

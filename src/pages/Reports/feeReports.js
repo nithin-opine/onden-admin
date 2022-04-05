@@ -8,7 +8,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet } from "../../config/apiConfig"
 
-class ResignationReports extends Component {
+class FeeReports extends Component {
   constructor(props) {
     super(props)
 
@@ -17,38 +17,38 @@ class ResignationReports extends Component {
       end_date: "2022-03-24",
       columnDefs: [
         {
-          field: "studentId",
-          headerName: "Tutor Id",
-          filter: "agMultiColumnFilter",
-        },
-        {
-          field: "fname",
+          field: "firstName",
           headerName: "First Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "lastName",
           headerName: "Last Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
-          headerName: "Nick Name",
+          field: "packagePurchasedOn",
+          headerName: "Purchased On",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
-          headerName: "Phone Number",
+          field: "packageName",
+          headerName: "Package Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
-          headerName: "Email",
+          field: "packageAmountPaid",
+          headerName: "Amount Paid",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
-          headerName: "Joined on",
+          field: "coinsCredited",
+          headerName: "Coin Credited",
+          filter: "agMultiColumnFilter",
+        },
+        {
+          field: "packageExpiresOn",
+          headerName: "Package Expiry",
           filter: "agMultiColumnFilter",
         },
       ],
@@ -77,7 +77,7 @@ class ResignationReports extends Component {
     const updateData = data => params.api.setRowData(data)
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
+      "api/admin/report/fee_reports/" +
       this.state.start_date +
       "/" +
       this.state.end_date
@@ -93,22 +93,25 @@ class ResignationReports extends Component {
 
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
+      "api/admin/report/fee_reports/" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp => {
+      console.log(resp.response.data.data)
+      updateData(resp.response.data.data)
+    })
   }
   render() {
     return (
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Resignation Reports</title>
+            <title>Onden | Fee Reports</title>
           </MetaTags>
           <Container fluid>
-            <h4>RESIGNATION REPORT</h4>
+            <h4>FEE REPORT</h4>
             <Row>
               <Col md={12}>
                 <Card>
@@ -180,4 +183,4 @@ class ResignationReports extends Component {
   }
 }
 
-export default ResignationReports
+export default FeeReports

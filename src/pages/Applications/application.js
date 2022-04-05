@@ -13,6 +13,7 @@ import {
   AvRadioGroup,
   AvRadio,
 } from "availity-reactstrap-validation"
+import { forEach } from "lodash"
 
 class Application extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class Application extends Component {
       timeArray: [],
       isModelOpen: false,
       selectedRow: "",
+      interviewtime: 1,
+      coinbalance: 5,
+      date: "",
     }
 
     this.tog_standard = this.tog_standard.bind(this)
@@ -30,10 +34,8 @@ class Application extends Component {
     this.rejectInterview = this.rejectInterview.bind(this)
     this.handleValidSubmit = this.handleValidSubmit.bind(this)
   }
-  handleChange(e) {
-    let updatedname = e.target.name
-    let updatedvalue = e.target.value
-    this.setState({ selectedRow: updatedvalue })
+  handleChange = event => {
+    console.log(event)
   }
   tog_standard() {
     const currentState = this.state.isModelOpen
@@ -41,9 +43,7 @@ class Application extends Component {
       {
         isModelOpen: !currentState,
       },
-      () => {
-        console.log(this.state.isModelOpen)
-      }
+      () => {}
     )
   }
   handleValidSubmit() {
@@ -99,7 +99,6 @@ class Application extends Component {
       this.props.match.params.id
     let resp = apiGet(url)
     resp.then(resp => {
-      console.log("resp is", resp.response.data.data)
       this.setState({ details: resp.response.data.data })
       let dayArray = []
       let finalArray = []
@@ -113,18 +112,28 @@ class Application extends Component {
 
       finalArray = dayArray.map(e => {
         e = e.substring(0, 3)
-        console.log("e is,", e)
+
         return e
       })
-      console.log("time array is,", timeArray)
+
       this.setState({ timeArray: timeArray })
 
       this.setState({ finalArray: finalArray })
-      console.log("final array is,", finalArray)
     })
   }
   render() {
-    console.log("params", this.props)
+    let data = this.state.details.selectedInterviewSlotList
+      ? this.state.details.selectedInterviewSlotList.map((e, v) => {
+          return (
+            <>
+              <AvRadio
+                label={e.startTime + " - " + e.endTime}
+                value={e.interviewSlotId}
+              ></AvRadio>
+            </>
+          )
+        })
+      : ""
     return (
       <React.Fragment>
         <div className="page-content">
@@ -360,23 +369,15 @@ class Application extends Component {
                         <div className="modal-inner-header">
                           Pick a time slot and date to schedule your interview
                         </div>
-                        <AvRadioGroup
-                          name="interviewtime"
-                          required
-                          errorMessage="Pick one!"
-                        >
-                          <AvRadio label="Bulbasaur" value="Bulbasaur" />
-                          <AvRadio label="Squirtle" value="Squirtle" />
-                          <AvRadio label="Charmander" value="Charmander" />
-                          <AvRadio label="Pikachu" value="Pikachu" disabled />
-                        </AvRadioGroup>
+                        <AvRadioGroup name="interviewSlot">{data}</AvRadioGroup>
 
                         <AvField
-                          name="coinbalance"
-                          label="Coin balance"
+                          name="date"
+                          label="Select date"
                           onChange={this.handleChange}
-                          type="number"
+                          type="date"
                           required
+                          value={this.state.date}
                         />
                       </div>
                       <div className="modal-footer">

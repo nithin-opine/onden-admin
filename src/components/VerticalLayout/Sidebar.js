@@ -14,6 +14,7 @@ import logoLightPng from "../../assets/images/logo-light.png"
 import logoLightSvg from "../../assets/images/logo-light.svg"
 import ondenLogo from "../../assets/images/logo-light1.png"
 import logoDark from "../../assets/images/logo-dark.png"
+import headerlogo from "../../assets/ondenassets/headerlogo.png"
 
 const Sidebar = props => {
   return (
@@ -22,19 +23,19 @@ const Sidebar = props => {
         <div className="navbar-brand-box">
           <Link to="/" className="logo logo-dark">
             <span className="logo-sm">
-              <img src={logo} alt="" height="22" />
+              <img src={headerlogo} alt="" height="22" />
             </span>
             <span className="logo-lg">
-              <img src={logoDark} alt="" height="17" />
+              <img src={headerlogo} alt="" height="22" />
             </span>
           </Link>
 
           <Link to="/" className="logo logo-light">
             <span className="logo-sm">
-              <img src={logoLightSvg} alt="" height="22" />
+              <img src={headerlogo} alt="" height="22" />
             </span>
             <span className="logo-lg">
-              <img src={logoLightPng} alt="" height="19" />
+              <img src={headerlogo} alt="" height="22" />
             </span>
           </Link>
         </div>

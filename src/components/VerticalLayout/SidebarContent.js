@@ -137,7 +137,7 @@ const SidebarContent = props => {
               </Link>
             </li>
             <li>
-              <Link to="#" className=" ">
+              <Link to="/schedule-settings" className=" ">
                 <i className="bx bx-home"></i>
                 <span>{props.t("Schedule settings")}</span>
               </Link>
@@ -164,7 +164,7 @@ const SidebarContent = props => {
             </li>
             <li className="menu-title">{props.t("Reports")} </li>
             <li>
-              <Link to="#" className=" ">
+              <Link to="/reports" className=" ">
                 <i className="bx bx-home"></i>
                 <span>{props.t("Data Reports")}</span>
               </Link>
@@ -179,7 +179,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Account settings")} </li>
             <li>
               <Link to="#" className=" ">
-                <i className="bx bx-home"></i>vbnm,
+                <i className="bx bx-home"></i>
                 <span>{props.t("Change password")}</span>
               </Link>
             </li>

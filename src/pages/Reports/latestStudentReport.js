@@ -15,17 +15,17 @@ class LatestStudentReports extends Component {
     this.state = {
       columnDefs: [
         {
-          field: "id",
-          headerName: "Student Id",
+          field: "studentId",
+          headerName: "Stundent ID",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "fname",
+          field: "firstname",
           headerName: "First Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "lastname",
           headerName: "Last Name",
           filter: "agMultiColumnFilter",
         },
@@ -35,17 +35,17 @@ class LatestStudentReports extends Component {
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
+          field: "phone",
           headerName: "Phone Number",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
+          field: "email",
           headerName: "Email",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
+          field: "dateCreated",
           headerName: "Joined on",
           filter: "agMultiColumnFilter",
         },
@@ -70,7 +70,9 @@ class LatestStudentReports extends Component {
 
     let url = BaseUrl.apiUrl.baseUrl + "api/admin/report/latest_students_list"
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp => {
+      updateData(resp.response.data.data)
+    })
   }
   render() {
     return (
@@ -80,7 +82,7 @@ class LatestStudentReports extends Component {
             <title>Onden | Latest Student Reports</title>
           </MetaTags>
           <Container fluid>
-            <h4>Latest Students Reports</h4>
+            <h4>LATEST STUDENTS REPORT</h4>
             <Row>
               <Col md={12}>
                 <Card>

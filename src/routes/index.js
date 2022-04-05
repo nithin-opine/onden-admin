@@ -21,6 +21,11 @@ import ApplicationSettings from "../pages/ApplicationSettings"
 import PackageSettings from "../pages/ApplicationSettings/PackageSettings"
 import CoinvalueSettings from "../pages/ApplicationSettings/CoinValueSettings"
 import ResignationReports from "pages/Reports/resignationReport"
+import StudentLeavingReports from "pages/Reports/studentLeavingReport"
+import InterviewReports from "pages/Reports/interviewReports"
+import FeeReports from "pages/Reports/feeReports"
+import MOSTReport from "pages/Reports/mostOptedStudentTimeReport"
+import MATTReport from "pages/Reports/mostAvailedTutorTimeReport"
 import InterviewCalendar from "../pages/InterviewCalendar"
 import StudentProfile from "../pages/Students/StudentProfile"
 import Interview from "pages/Applications/interview"
@@ -30,6 +35,7 @@ import SingleWithdrawalRequest from "../pages/CoinWithdrawalRequest/SingleWithdr
 import ResignationsList from "../pages/Resignations"
 import ChangePassword from "../pages/ChangePassword"
 import Application from "../pages/Applications/application"
+import ScheduleSettings from "pages/ScheduleSettings"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -48,6 +54,11 @@ const authProtectedRoutes = [
   { path: "/latest-student-reports", component: LatestStudentReports },
   { path: "/latest-tutor-reports", component: LatestTutorReport },
   { path: "/resignation-report", component: ResignationReports },
+  { path: "/student-leave-reports", component: StudentLeavingReports },
+  { path: "/interview-reports", component: InterviewReports },
+  { path: "/fee-reports", component: FeeReports },
+  { path: "/student-timing-reports", component: MOSTReport },
+  { path: "/tutor-timing-reports", component: MATTReport },
   { path: "/settings", component: ApplicationSettings },
   { path: "/package-settings", component: PackageSettings },
   { path: "/coin-settings", component: CoinvalueSettings },
@@ -59,6 +70,7 @@ const authProtectedRoutes = [
   { path: "/resignation-list", component: ResignationsList },
   { path: "/change-password", component: ChangePassword },
   { path: "/application/:id", component: Application },
+  { path: "/schedule-settings", component: ScheduleSettings },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
