@@ -733,7 +733,7 @@ class PackageSettings extends Component {
                       ? "bg-success position-fixed top-0 end-0 p-2 m-3"
                       : "bg-danger position-fixed top-0 end-0 p-2 m-3"
                   }
-                  style={{ zIndex: "1005" }}
+                  // style={{ zIndex: "1005" }}
                 >
                   <Toast isOpen={this.state.isToggleTaost}>
                     <ToastBody>

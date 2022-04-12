@@ -67,7 +67,7 @@ class ScheduleSettings extends Component {
                                         className="deleteslot-btn"
                                         onClick={this.deleteSlot(v.id)}
                                       >
-                                        Delete this slot
+                                        Delete
                                       </Button>
                                     </Col>
                                   </Row>

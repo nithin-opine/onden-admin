@@ -13,8 +13,8 @@ class MOSTReport extends Component {
     super(props)
 
     this.state = {
-      start_date: "2021-03-22",
-      end_date: "2022-03-24",
+      // start_date: "2021-03-22",
+      // end_date: "2022-03-24",
       columnDefs: [
         {
           field: "studentId",
