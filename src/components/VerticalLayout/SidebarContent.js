@@ -95,7 +95,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Dashbaord")} </li>
             <li>
               <Link to="/dashboard" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-home-circle"></i>
                 <span>{props.t("Admin Dashbaord")}</span>
               </Link>
             </li>
@@ -103,7 +103,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Information system")} </li>
             <li>
               <Link to="/#" className="has-arrow">
-                <i className="bx bx-store"></i>
+                <i className="bx bx-book-reader"></i>
                 <span>{props.t("Students")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
@@ -114,7 +114,7 @@ const SidebarContent = props => {
             </li>
             <li>
               <Link to="/#" className="has-arrow">
-                <i className="bx bx-store"></i>
+                <i className="bx bx-user"></i>
                 <span>{props.t("Tutors")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
@@ -126,60 +126,60 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Tutor Hiring")} </li>
             <li>
               <Link to="/application-list" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-file"></i>
                 <span>{props.t("Applications")}</span>
               </Link>
             </li>
             <li>
               <Link to="/interview-list" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-calendar-event"></i>
                 <span>{props.t("Interviews")}</span>
               </Link>
             </li>
             <li>
               <Link to="/schedule-settings" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-timer"></i>
                 <span>{props.t("Schedule settings")}</span>
               </Link>
             </li>
             <li>
               <Link to="/calendar" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-calendar"></i>
                 <span>{props.t("Interview calendar")}</span>
               </Link>
             </li>
             <li className="menu-title">{props.t(" Coin withdrawals")} </li>
             <li>
               <Link to="/coin-list" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-file"></i>
                 <span>{props.t("Open requests")}</span>
               </Link>
             </li>
             <li className="menu-title">{props.t("Resignations")} </li>
             <li>
               <Link to="/resignation-list" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-file"></i>
                 <span>{props.t("Open requests")}</span>
               </Link>
             </li>
             <li className="menu-title">{props.t("Reports")} </li>
             <li>
               <Link to="/reports" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-file"></i>
                 <span>{props.t("Data Reports")}</span>
               </Link>
             </li>
             <li className="menu-title">{props.t("Master settings")} </li>
             <li>
               <Link to="/settings" className=" ">
-                <i className="bx bx-home"></i>
+                <i className="bx bx-cog"></i>
                 <span>{props.t("Application settings")}</span>
               </Link>
             </li>
             <li className="menu-title">{props.t("Account settings")} </li>
             <li>
-              <Link to="#" className=" ">
-                <i className="bx bx-home"></i>
+              <Link to="/change-password" className=" ">
+                <i className="bx bx-key"></i>
                 <span>{props.t("Change password")}</span>
               </Link>
             </li>
