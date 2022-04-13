@@ -74,5 +74,26 @@ const apiGet = endPoint => {
       return { error: error.data, resultCode: 2, response: [] }
     })
 }
+const apiDelete = endPoint => {
+  try {
+    return axios
+      .delete(endPoint)
+      .then(response => {
+        if (
+          (response.status >= 200 && response.status < 300) ||
+          response.status === 304
+        ) {
+          return { error: null, response: response, resultCode: 1 }
+        } else {
+          return { error: response, resultCode: 2, response: [] }
+        }
+      })
+      .catch(error => {
+        return { error: error.response, resultCode: 2, response: [] }
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-export { apiPost, apiGet, apiPut }
+export { apiPost, apiGet, apiPut, apiDelete }

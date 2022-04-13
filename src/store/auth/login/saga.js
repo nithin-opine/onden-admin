@@ -15,10 +15,15 @@ function* loginUser({ payload: { user, history } }) {
       "https://onden.app:8443/onden-0.0.1-SNAPSHOT/login",
       { username: user.username, password: user.password }
     )
-    localStorage.setItem("authUser", JSON.stringify(response))
-    localStorage.setItem("accessToken", response.headers.authorization)
-    yield put(loginSuccess(response))
-    history.push("/dashboard")
+    if (response.data.statusCodeValue == 401) {
+      throw new Error("Bad creds")
+    }
+    if (response.data.statusCodeValue == 200) {
+      localStorage.setItem("authUser", JSON.stringify(response))
+      localStorage.setItem("accessToken", response.headers.authorization)
+      yield put(loginSuccess(response))
+      history.push("/dashboard")
+    }
   } catch (error) {
     yield put(apiError(error))
   }

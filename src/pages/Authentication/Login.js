@@ -123,7 +123,9 @@ const Login = props => {
                     return false
                   }}
                 >
-                  {error ? <Alert color="danger">{error}</Alert> : null}
+                  {error ? (
+                    <Alert color="danger">Please check credentials</Alert>
+                  ) : null}
 
                   <div className="mb-3">
                     <Label className="form-label">username</Label>

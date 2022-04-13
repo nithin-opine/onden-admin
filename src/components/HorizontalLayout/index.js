@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react"
 import { withRouter } from "react-router-dom"
 import PropTypes from "prop-types"
 
@@ -7,7 +7,7 @@ import {
   changeLayout,
   changeTopbarTheme,
   changeLayoutWidth,
-  showRightSidebarAction
+  showRightSidebarAction,
 } from "../../store/actions"
 
 //redux
@@ -18,18 +18,16 @@ import Navbar from "./Navbar"
 import Header from "./Header"
 import Footer from "./Footer"
 import RightSidebar from "../CommonForBoth/RightSidebar"
-const Layout = (props) => {
-
+const Layout = props => {
   const dispatch = useDispatch()
 
-  const {
-    topbarTheme, layoutWidth, isPreloader, showRightSidebar
-  } = useSelector(state => ({
-    topbarTheme: state.Layout.topbarTheme,
-    layoutWidth: state.Layout.layoutWidth,
-    isPreloader: state.Layout.isPreloader,
-    showRightSidebar: state.Layout.showRightSidebar,
-  }))
+  const { topbarTheme, layoutWidth, isPreloader, showRightSidebar } =
+    useSelector(state => ({
+      topbarTheme: state.Layout.topbarTheme,
+      layoutWidth: state.Layout.layoutWidth,
+      isPreloader: state.Layout.isPreloader,
+      showRightSidebar: state.Layout.showRightSidebar,
+    }))
 
   /*
   document title
@@ -38,37 +36,35 @@ const Layout = (props) => {
     const title = props.location.pathname
     let currentage = title.charAt(1).toUpperCase() + title.slice(2)
 
-    document.title =
-      currentage + " | Skote - React Admin & Dashboard Template"
-  }, [props.location.pathname]);
+    document.title = currentage + " | Onden Admin"
+  }, [props.location.pathname])
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, []);
+  }, [])
 
-
-    //hides right sidebar on body click
-    const hideRightbar = (event) => {
-      var rightbar = document.getElementById("right-bar");
-      //if clicked in inside right bar, then do nothing
-      if (rightbar && rightbar.contains(event.target)) {
-        return;
-      } else {
-        //if clicked in outside of rightbar then fire action for hide rightbar
-        dispatch(showRightSidebarAction(false));
-      }
-    };
+  //hides right sidebar on body click
+  const hideRightbar = event => {
+    var rightbar = document.getElementById("right-bar")
+    //if clicked in inside right bar, then do nothing
+    if (rightbar && rightbar.contains(event.target)) {
+      return
+    } else {
+      //if clicked in outside of rightbar then fire action for hide rightbar
+      dispatch(showRightSidebarAction(false))
+    }
+  }
 
   /*
   layout settings
   */
   useEffect(() => {
-    dispatch(changeLayout("horizontal"));
-  }, [dispatch]);
+    dispatch(changeLayout("horizontal"))
+  }, [dispatch])
 
   useEffect(() => {
-     //init body click event fot toggle rightbar
-     document.body.addEventListener("click", hideRightbar, true);
+    //init body click event fot toggle rightbar
+    document.body.addEventListener("click", hideRightbar, true)
 
     if (isPreloader === true) {
       document.getElementById("preloader").style.display = "block"
@@ -86,19 +82,19 @@ const Layout = (props) => {
 
   useEffect(() => {
     if (topbarTheme) {
-      dispatch(changeTopbarTheme(topbarTheme));
+      dispatch(changeTopbarTheme(topbarTheme))
     }
-  }, [dispatch, topbarTheme]);
+  }, [dispatch, topbarTheme])
 
   useEffect(() => {
     if (layoutWidth) {
-      dispatch(changeLayoutWidth(layoutWidth));
+      dispatch(changeLayoutWidth(layoutWidth))
     }
-  }, [dispatch, layoutWidth]);
+  }, [dispatch, layoutWidth])
 
-  const [isMenuOpened, setIsMenuOpened] = useState(false);
+  const [isMenuOpened, setIsMenuOpened] = useState(false)
   const openMenu = () => {
-    setIsMenuOpened(!isMenuOpened);
+    setIsMenuOpened(!isMenuOpened)
   }
 
   return (
@@ -129,11 +125,11 @@ const Layout = (props) => {
 
       {showRightSidebar ? <RightSidebar /> : null}
     </React.Fragment>
-  );
+  )
 }
 
 Layout.propTypes = {
-  changeLayout: PropTypes.func,/*  */
+  changeLayout: PropTypes.func /*  */,
   changeLayoutWidth: PropTypes.func,
   changeTopbarTheme: PropTypes.func,
   children: PropTypes.object,
@@ -141,7 +137,7 @@ Layout.propTypes = {
   layoutWidth: PropTypes.any,
   location: PropTypes.object,
   showRightSidebar: PropTypes.any,
-  topbarTheme: PropTypes.any
+  topbarTheme: PropTypes.any,
 }
 
-export default withRouter(Layout);
+export default withRouter(Layout)

@@ -529,6 +529,73 @@ margin-bottom: 1em;
   }
 }
 
+.appCImg {
+  height: 15em;
+  width: 100%;
+}
+
+.appCImg img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.applicationCard {
+  padding: 3em;
+}
+
+.appCname {
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+.formBtn button {
+  background: #eae6e6;
+  padding: 1em 3em;
+  margin-right: 1.5em;
+  border-radius: 5px;
+  display: inline-block;
+  color: #575555;
+  border: 1px solid #aeabab;
+}
+
+.intModal .modal-body {
+  padding: 3.5rem;
+}
+.modalProceedBtn {
+  background: #556ee6;
+  color: #fff;
+}
+.notFound {
+  height: 82vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+.modalNegateBtn, .modalProceedBtn {
+  margin-top: 1em;
+  border: 1px solid #556ee6;
+  border-radius: 3px;
+  padding: .2em 2em;
+  margin-right: 1em;
+}
+.timeSlot input {
+  width: 10em !important;
+  margin-top: 1em;
+}
+.deleteBtn {
+  background: #2a3042;
+  border: none;
+  padding: .27em 1.5em;
+  margin-left: 2em;
+  color: #fff;
+  border-radius: 2px;
+}
+.ml-3, .mx-3 {
+  margin-left: 1rem !important;
+}
 //rightbar drawer
 .css-sourceMap-modules-importLoaders-1-localIdentName-animate__animated___2O131 {
   animation-duration: 0.6s !important;

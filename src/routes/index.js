@@ -36,6 +36,7 @@ import ResignationsList from "../pages/Resignations"
 import ChangePassword from "../pages/ChangePassword"
 import Application from "../pages/Applications/application"
 import ScheduleSettings from "pages/ScheduleSettings"
+import Withdrawal from "pages/Withdrawals/Withdrawal"
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index"
@@ -66,7 +67,7 @@ const authProtectedRoutes = [
   { path: "/student-profile/:id", component: StudentProfile },
   { path: "/teacher-profile/:id", component: TeacherProfile },
   { path: "/interview-application/:id/:tid", component: InterviewApplication },
-  { path: "/withdrawals/:id", component: SingleWithdrawalRequest },
+  { path: "/Withdrawal/:id", component: Withdrawal },
   { path: "/resignation-list", component: ResignationsList },
   { path: "/change-password", component: ChangePassword },
   { path: "/application/:id", component: Application },
