@@ -48,6 +48,14 @@ const columns = [
     dataField: "dateCreated",
     text: "Join Date",
     sort: true,
+    sortFunc: (a, b, order) => {
+      let startdate = new Date(a)
+      let enddate = new Date(b)
+      if (order === "asc") {
+        return enddate - startdate
+      }
+      return startdate - enddate // desc
+    },
   },
   {
     dataField: "coinValue",
@@ -58,6 +66,12 @@ const columns = [
     dataField: "view",
     text: "View profile",
     sort: true,
+    sortFunc: (a, b, order, dataField, rowA, rowB) => {
+      if (order === "asc") {
+        return b - a
+      }
+      return a - b // desc
+    },
   },
   //   {
   //     dataField: "registeredMedia",
@@ -427,7 +441,7 @@ class TeachersList extends Component {
       const rows = []
       resp.response.data.data.forEach((value, index) => {
         let date = new Date(value.dateCreated)
-        let localDate = date.toLocaleString()
+        let localDate = date.toDateString()
         rows.push({
           id: value.teacherId,
           name: value.firstname + " " + value.lastname,

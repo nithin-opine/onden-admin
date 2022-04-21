@@ -449,7 +449,7 @@ class CoinWithDrawalRequest extends Component {
 
           view: (
             <>
-              <Link to={`/withdrawals/${value.id}`} className="tableBtn">
+              <Link to={`/withdrawal/${value.id}`} className="tableBtn">
                 Process
               </Link>
             </>
@@ -464,90 +464,98 @@ class CoinWithDrawalRequest extends Component {
     console.log(this.state.tableData)
     return (
       <React.Fragment>
-        <div className="page-content">
-          <MetaTags>
-            <title>Onden | Coin Withdrawal Request List</title>
-          </MetaTags>
-          <Container fluid>
-            <h4>Coin Withdrawal Request</h4>
-            <Row>
-              <Col md={12}>
-                <Card className="mini-stats-wid">
-                  <CardBody>
-                    <PaginationProvider
-                      pagination={paginationFactory(pageOptions)}
-                      keyField="id"
-                      columns={columns}
-                      data={this.state.tableData}
-                    >
-                      {({ paginationProps, paginationTableProps }) => (
-                        <ToolkitProvider
-                          keyField="id"
-                          columns={columns}
-                          data={this.state.tableData}
-                          search
-                        >
-                          {toolkitProps => (
-                            <React.Fragment>
-                              <Row className="mb-2">
-                                <Col md="4">
-                                  <div className="search-box me-2 mb-2 d-inline-block">
-                                    <div className="position-relative">
-                                      <SearchBar
-                                        {...toolkitProps.searchProps}
-                                      />
-                                      <i className="bx bx-search-alt search-icon" />
+        {this.state.apiList !== null ? (
+          <div className="page-content">
+            <MetaTags>
+              <title>Onden | Coin Withdrawal Request List</title>
+            </MetaTags>
+            <Container fluid>
+              <h4>Coin Withdrawal Request</h4>
+              <Row>
+                <Col md={12}>
+                  <Card className="mini-stats-wid">
+                    <CardBody>
+                      <PaginationProvider
+                        pagination={paginationFactory(pageOptions)}
+                        keyField="id"
+                        columns={columns}
+                        data={this.state.tableData}
+                      >
+                        {({ paginationProps, paginationTableProps }) => (
+                          <ToolkitProvider
+                            keyField="id"
+                            columns={columns}
+                            data={this.state.tableData}
+                            search
+                          >
+                            {toolkitProps => (
+                              <React.Fragment>
+                                <Row className="mb-2">
+                                  <Col md="4">
+                                    <div className="search-box me-2 mb-2 d-inline-block">
+                                      <div className="position-relative">
+                                        <SearchBar
+                                          {...toolkitProps.searchProps}
+                                        />
+                                        <i className="bx bx-search-alt search-icon" />
+                                      </div>
                                     </div>
-                                  </div>
-                                </Col>
-                              </Row>
+                                  </Col>
+                                </Row>
 
-                              <Row>
-                                <Col xl="12">
-                                  <div className="table-responsive">
-                                    <BootstrapTable
-                                      keyField={"id"}
-                                      responsive
-                                      bordered={false}
-                                      striped={false}
-                                      defaultSorted={defaultSorted}
-                                      selectRow={selectRow}
-                                      classes={
-                                        "table align-middle table-nowrap table-striped striped table-borderd"
-                                      }
-                                      headerWrapperClasses={"thead-light"}
-                                      {...toolkitProps.baseProps}
-                                      {...paginationTableProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
+                                <Row>
+                                  <Col xl="12">
+                                    <div className="table-responsive">
+                                      <BootstrapTable
+                                        keyField={"id"}
+                                        responsive
+                                        bordered={false}
+                                        striped={false}
+                                        defaultSorted={defaultSorted}
+                                        selectRow={selectRow}
+                                        classes={
+                                          "table align-middle table-nowrap table-striped striped table-borderd"
+                                        }
+                                        headerWrapperClasses={"thead-light"}
+                                        {...toolkitProps.baseProps}
+                                        {...paginationTableProps}
+                                      />
+                                    </div>
+                                  </Col>
+                                </Row>
 
-                              <Row className="align-items-md-center mt-30">
-                                <Col className="inner-custom-pagination d-flex">
-                                  <div className="d-inline">
-                                    <SizePerPageDropdownStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                  <div className="text-md-right ms-auto">
-                                    <PaginationListStandalone
-                                      {...paginationProps}
-                                    />
-                                  </div>
-                                </Col>
-                              </Row>
-                            </React.Fragment>
-                          )}
-                        </ToolkitProvider>
-                      )}
-                    </PaginationProvider>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+                                <Row className="align-items-md-center mt-30">
+                                  <Col className="inner-custom-pagination d-flex">
+                                    <div className="d-inline">
+                                      <SizePerPageDropdownStandalone
+                                        {...paginationProps}
+                                      />
+                                    </div>
+                                    <div className="text-md-right ms-auto">
+                                      <PaginationListStandalone
+                                        {...paginationProps}
+                                      />
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </React.Fragment>
+                            )}
+                          </ToolkitProvider>
+                        )}
+                      </PaginationProvider>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        ) : (
+          <div className="page-content">
+            <div className="notFound">
+              The resource you requested could not be found.
+            </div>
+          </div>
+        )}
       </React.Fragment>
     )
   }

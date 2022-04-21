@@ -51,6 +51,14 @@ const columns = [
     dataField: "dateCreated",
     text: "Joined On",
     sort: true,
+    sortFunc: (a, b, order) => {
+      let startdate = new Date(a)
+      let enddate = new Date(b)
+      if (order === "asc") {
+        return enddate - startdate
+      }
+      return startdate - enddate // desc
+    },
   },
   {
     dataField: "registeredMedia",
@@ -424,7 +432,7 @@ class StudentList extends Component {
       const rows = []
       resp.response.data.data.forEach((value, index) => {
         let date = new Date(value.dateCreated)
-        let localDate = date.toLocaleDateString()
+        let localDate = date.toDateString()
         rows.push({
           id: value.studentId,
           name: value.firstname + " " + value.lastname,

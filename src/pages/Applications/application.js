@@ -189,10 +189,7 @@ export default class Application extends Component {
           {this.state.apiList !== null ? (
             <Container fluid>
               {/* Render Breadcrumb */}
-              <Breadcrumbs
-                title="Application"
-                breadcrumbItem="Applications list"
-              />
+              <Breadcrumbs title="Application" breadcrumbItem="Application" />
               <Row>
                 <Col md={12}>
                   <Card className="applicationCard">

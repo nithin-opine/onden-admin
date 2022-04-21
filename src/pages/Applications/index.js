@@ -131,7 +131,7 @@ class ApplicationList extends Component {
             <title>Onden | Students List</title>
           </MetaTags>
           <Container fluid>
-            <h4>Students List</h4>
+            <h4>Applications List</h4>
             <Row>
               <Col md={12}>
                 <Card className="mini-stats-wid">
