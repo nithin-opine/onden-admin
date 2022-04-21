@@ -128,7 +128,7 @@ class ApplicationList extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Onden | Students List</title>
+            <title>Onden | Application list</title>
           </MetaTags>
           <Container fluid>
             <h4>Applications List</h4>
