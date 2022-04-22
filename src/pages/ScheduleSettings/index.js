@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import MetaTags from "react-meta-tags"
 import { Link } from "react-router-dom"
 import { Container, Row, Col, Card, CardBody, Media } from "reactstrap"
 import { apiGet, apiPost, apiPut, apiDelete } from "../../config/apiConfig"
@@ -108,9 +109,11 @@ const ScheduleSettings = props => {
   return (
     <React.Fragment>
       <div className="page-content">
+        <MetaTags>
+          <title>Onden | Schedule Settings</title>
+        </MetaTags>
         <Container fluid>
-          {/* Render Breadcrumb */}
-          <Breadcrumbs title="Settings" breadcrumbItem="Schedule settings" />
+          <h4>Schedule Settings</h4>
           <Row>
             <Col lg={12}>
               <Card>
