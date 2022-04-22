@@ -24,6 +24,7 @@ export default class Application extends Component {
       date: "",
       slot: "",
       conf: false,
+      error: false,
     }
     this.tog_small = this.tog_small.bind(this)
     this.tog_interview = this.tog_interview.bind(this)
@@ -110,28 +111,33 @@ export default class Application extends Component {
     this.showToast(1)
   }
   validSubmit() {
-    let body = {
-      teacherId: this.state.apiList.id,
-      interviewType: "Telephone Interview",
-      interviewSlotId: this.state.slot,
-      interviewDate: this.state.date,
-      interviewStatus: "2",
-      coinValue: 0,
-    }
-    const Url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/interview_schedule"
-    let resp = apiPost(Url, body)
-
-    resp.then(resp => {
-      if (resp.response.status == 200) {
-        this.setState({ modal_interview: false }, function () {
-          this.display((window.location.href = "/applications"))
-        })
-      } else {
-        this.showToast(2)
-        this.setState({ modal_interview: false })
+    if (this.state.slot == "") {
+      this.setState({ error: true })
+    } else {
+      let body = {
+        teacherId: this.state.apiList.id,
+        interviewType: "Telephone Interview",
+        interviewSlotId: this.state.slot,
+        interviewDate: this.state.date,
+        interviewStatus: "2",
+        coinValue: 0,
       }
-      this.setState({ conf: true })
-    })
+      const Url =
+        BaseUrl.apiUrl.baseUrl + "api/admin/teacher/interview_schedule"
+      let resp = apiPost(Url, body)
+
+      resp.then(resp => {
+        if (resp.response.status == 200) {
+          this.setState({ modal_interview: false }, function () {
+            this.display((window.location.href = "/application-list"))
+          })
+        } else {
+          this.showToast(2)
+          this.setState({ modal_interview: false })
+        }
+        this.setState({ conf: true })
+      })
+    }
   }
 
   render() {
@@ -166,17 +172,22 @@ export default class Application extends Component {
         options = Object.keys(this.state.apiList.selectedInterviewSlotList).map(
           (slot, i) => {
             return (
-              <AvRadio
-                label={
-                  this.state.apiList.selectedInterviewSlotList[slot].startTime +
+              <label htmlFor="slot" className="slotlabel">
+                <input
+                  id="radio1"
+                  type="radio"
+                  name="slot"
+                  required="required"
+                  onChange={this.handleValueChange.bind(this)}
+                  value={
+                    this.state.apiList.selectedInterviewSlotList[slot]
+                      .interviewSlotId
+                  }
+                />
+                {this.state.apiList.selectedInterviewSlotList[slot].startTime +
                   " - " +
-                  this.state.apiList.selectedInterviewSlotList[slot].endTime
-                }
-                value={
-                  this.state.apiList.selectedInterviewSlotList[slot]
-                    .interviewSlotId
-                }
-              />
+                  this.state.apiList.selectedInterviewSlotList[slot].endTime}
+              </label>
             )
           }
         )
@@ -428,18 +439,14 @@ export default class Application extends Component {
                                     className="form-horizontal mt-4"
                                     onValidSubmit={this.validSubmit}
                                   >
-                                    <div className="form-group">
-                                      <AvRadioGroup
-                                        onChange={this.handleRadioChange.bind(
-                                          this
-                                        )}
-                                        name="slot"
-                                        required
-                                        errorMessage="Pick one!"
-                                      >
-                                        {options}
-                                      </AvRadioGroup>
-                                    </div>
+                                    {options}
+                                    {this.state.error == true ? (
+                                      <span className="errormsg">
+                                        Pick a slot
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
                                     <AvField
                                       name="date"
                                       label="Date"
