@@ -108,7 +108,7 @@ class Dashboard extends Component {
       <React.Fragment>
         <div className="page-content">
           <MetaTags>
-            <title>Dashboard | Skote - React Admin & Dashboard Template</title>
+            <title>Dashboard | Onden Admin</title>
           </MetaTags>
           <Container fluid>
             <h4>Dashboard</h4>
@@ -306,7 +306,7 @@ class Dashboard extends Component {
                             </div>
                             <h5 className="font-size-15">{social.title}</h5>
                             <p className="text-muted mb-0">
-                              {social.description} sales
+                              {social.description} Registrations
                             </p>
                           </div>
                         </Col>

@@ -215,6 +215,18 @@ color: #fff;
   border: 2px solid #c6c6c6;
   margin-bottom: 2em;
 }
+.daySpan.active {
+
+  border: 2px solid #70e170;
+
+}
+.errormsg{
+  color:red
+}
+.slotlabel{
+  display:block
+}
+
 .bg-green{
   border-color: green;
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { Dropdown, DropdownToggle, DropdownMenu, Row, Col } from "reactstrap"
 import SimpleBar from "simplebar-react"
 import { BaseUrl } from "../../../config/BaseUrl"
-import { apiGet, apiPut } from "../../../config/apiConfig"
+import { apiGet, apiDelete } from "../../../config/apiConfig"
 
 //Import images
 import avatar3 from "../../../assets/images/users/avatar-3.jpg"
@@ -27,6 +27,17 @@ const NotificationDropdown = props => {
     })
   }, [])
 
+  const clear = () => {
+    let url = BaseUrl.apiUrl.baseUrl + "api/admin/profile/clear_notifications"
+    let resp = apiDelete(url)
+    let url1 = BaseUrl.apiUrl.baseUrl + "api/admin/profile/notifications"
+
+    let resp1 = apiGet(url1)
+    resp1.then(resp1 => {
+      setData(resp1.response.data.data)
+    })
+  }
+
   return (
     <React.Fragment>
       <Dropdown
@@ -40,8 +51,17 @@ const NotificationDropdown = props => {
           tag="button"
           id="page-header-notifications-dropdown"
         >
-          <i className="bx bx-bell bx-tada" />
-          <span className="badge bg-danger rounded-pill">{data.length}</span>
+          {data.length > 0 ? (
+            <i className="bx bx-bell bx-tada" />
+          ) : (
+            <i className="bx bx-bell" />
+          )}
+
+          {data.length > 0 ? (
+            <span className="badge bg-danger rounded-pill">{data.length}</span>
+          ) : (
+            ""
+          )}
         </DropdownToggle>
 
         <DropdownMenu className="dropdown-menu dropdown-menu-lg p-0 dropdown-menu-end">
@@ -103,9 +123,10 @@ const NotificationDropdown = props => {
             <Link
               className="btn btn-sm btn-link font-size-14 btn-block text-center"
               to="#"
+              onClick={clear}
             >
               <i className="mdi mdi-arrow-right-circle me-1"></i>{" "}
-              {props.t("View all")}{" "}
+              {props.t("Clear all")}{" "}
             </Link>
           </div>
         </DropdownMenu>
