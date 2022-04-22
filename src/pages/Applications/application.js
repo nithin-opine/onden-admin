@@ -94,14 +94,14 @@ export default class Application extends Component {
         var message = "Interview schedule addition failed"
         toastr.warning(message, title)
         break
-      case 1:
+      case 3:
         var title = "Success"
-        var message = "Succesfully rejected"
+        var message = "Succesfully deleted interview application"
         toastr.success(message, title)
         break
-      case 2:
+      case 4:
         var title = "Error"
-        var message = "Rejection failed"
+        var message = "Interview application deletion failed"
         toastr.warning(message, title)
         break
     }

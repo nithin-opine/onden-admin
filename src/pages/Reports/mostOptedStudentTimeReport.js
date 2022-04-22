@@ -17,17 +17,17 @@ class MOSTReport extends Component {
       // end_date: "2022-03-24",
       columnDefs: [
         {
-          field: "studentId",
+          field: "startTime",
           headerName: "Session start time",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "fname",
+          field: "endTime",
           headerName: "Session end time",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "totalSessions",
           headerName: "Total number of sessions",
           filter: "agMultiColumnFilter",
         },
@@ -51,20 +51,15 @@ class MOSTReport extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
   getReport() {
-    this.gridApi = params.api
-    this.gridColumnApi = params.columnApi
-    console.log("calling")
-    const updateData = data => params.api.setRowData(data)
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/most_opted_time_student/{from}/{to}" +
+      "api/admin/report/most_opted_time_student/" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
     resp.then(resp => {
-      console.log(resp.response.data.data)
-      updateData(resp.response.data.data)
+      this.setState({ rowData: resp.response.data.data })
     })
   }
 
@@ -76,10 +71,7 @@ class MOSTReport extends Component {
 
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/most_opted_time_student/{from}/{to}" +
-      this.state.start_date +
-      "/" +
-      this.state.end_date
+      "api/admin/report/most_opted_time_student/2021-01-01/2022-04-22"
     let resp = apiGet(url)
     resp.then(resp => {
       console.log(resp.response.data.data)

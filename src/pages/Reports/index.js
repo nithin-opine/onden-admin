@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import MetaTags from "react-meta-tags"
 import { Container, Row, Col, Card, CardBody } from "reactstrap"
-
+import { Link } from "react-router-dom"
 class Reports extends Component {
   render() {
     return (
@@ -16,44 +16,44 @@ class Reports extends Component {
               <Col md={12}>
                 <Card>
                   <CardBody>
-                    <a href="/latest-student-reports" className="">
+                    <Link to="/latest-student-reports" className="">
                       1. Latest Students Reports
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="latest-tutor-reports" className="">
+                    <Link to="latest-tutor-reports" className="">
                       2. Latest Tutors Reports
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="/resignation-report" className="">
+                    <Link to="/resignation-report" className="">
                       3. Resignation Reports
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="student-leave-reports" className="">
+                    <Link to="student-leave-reports" className="">
                       4. Reports of students who left Onden
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="/interview-reports" className="">
+                    <Link to="/interview-reports" className="">
                       5. Interview Reports
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="/fee-reports" className="">
+                    <Link to="/fee-reports" className="">
                       6. Fee Reports
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="/student-timing-reports" className="">
+                    <Link to="/student-timing-reports" className="">
                       7. Most opted student time
-                    </a>
+                    </Link>
                     <br />
                     <br />
-                    <a href="/tutor-timing-reports" className="">
+                    <Link to="/tutor-timing-reports" className="">
                       8. Most availed tutor timings
-                    </a>
+                    </Link>
                   </CardBody>
                 </Card>
               </Col>

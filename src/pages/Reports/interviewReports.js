@@ -17,27 +17,27 @@ class InterviewReports extends Component {
       // end_date: "2022-03-24",
       columnDefs: [
         {
-          field: "studentId",
+          field: "teacherId",
           headerName: "Tutor Id",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "fname",
+          field: "teacherName",
           headerName: "Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "interviewDate",
           headerName: "Interview Date",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
+          field: "interviewStartTime",
           headerName: "Interview Time",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "nickname",
+          field: "interviewStatus",
           headerName: "Interview Status",
           filter: "agMultiColumnFilter",
         },
@@ -61,35 +61,27 @@ class InterviewReports extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
   getReport() {
-    this.gridApi = params.api
-    this.gridColumnApi = params.columnApi
-    console.log("calling")
-    const updateData = data => params.api.setRowData(data)
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/interview_report/{from}/{to}" +
+      "api/admin/report/interview_report/" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
     resp.then(resp => {
       console.log(resp.response.data.data)
-      updateData(resp.response.data.data)
+      this.setState({ rowData: resp.response.data.data })
     })
   }
 
   onGridReady = params => {
     this.gridApi = params.api
     this.gridColumnApi = params.columnApi
-
     const updateData = data => params.api.setRowData(data)
 
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/settings/interview_time_slots" +
-      this.state.start_date +
-      "/" +
-      this.state.end_date
+      "api/admin/report/interview_report/2021-01-01/2022-04-22"
     let resp = apiGet(url)
     resp.then(resp => {
       console.log(resp.response.data.data)

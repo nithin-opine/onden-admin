@@ -30,7 +30,8 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 import { BaseUrl } from "../../../config/BaseUrl"
 import { apiGet, apiPut } from "../../../config/apiConfig"
 import { AvForm, AvField } from "availity-reactstrap-validation"
-
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 const columns = [
   {
     dataField: "count",
@@ -395,7 +396,6 @@ class CoinvalueSettings extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isToggleTaost: false,
       isModelOpen: false,
       apiData: [],
       tableData: [],
@@ -408,7 +408,6 @@ class CoinvalueSettings extends Component {
     this.tog_standard = this.tog_standard.bind(this)
     this.openModel = this.openModel.bind(this)
     this.updateGrid = this.updateGrid.bind(this)
-    this.toggle_toast = this.toggle_toast.bind(this)
   }
 
   handleValidSubmit() {
@@ -430,25 +429,18 @@ class CoinvalueSettings extends Component {
         if (resp.response.status == 200) {
           this.tog_standard()
           this.updateGrid()
-          this.toggle_toast()
+          toast.success(this.state.toastData.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         } else {
-          this.toggle_toast()
+          toast.error(this.state.toastData.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         }
       })
     })
   }
-  toggle_toast() {
-    const currentState = this.state.isToggleTaost
-    this.setState(
-      {
-        isToggleTaost: !currentState,
-      },
-      () => {
-        setTimeout(() => this.setState({ isToggleTaost: false }), 5000)
-        console.log(this.state.isToggleTaost)
-      }
-    )
-  }
+
   handleInvalidSubmit(event, errors, values) {
     console.log("invalid")
     this.setState({ email: values.email, error: true })
@@ -558,6 +550,7 @@ class CoinvalueSettings extends Component {
     console.log(this.state.tableData)
     return (
       <React.Fragment>
+        <ToastContainer />
         <div className="page-content">
           <MetaTags>
             <title>Onden | Coin Value Settings</title>
@@ -700,26 +693,6 @@ class CoinvalueSettings extends Component {
                     </div>
                   </AvForm>
                 </Modal>
-
-                <div
-                  className={
-                    this.state.toastData.code == 200
-                      ? "bg-success position-fixed top-0 end-0 p-2 m-3"
-                      : "bg-danger position-fixed top-0 end-0 p-2 m-3"
-                  }
-                  style={{ zIndex: "1005" }}
-                >
-                  <Toast isOpen={this.state.isToggleTaost}>
-                    <ToastBody>
-                      <p className="toast-status">
-                        {this.state.toastData.status}
-                      </p>
-                      <span className="toast-msg">
-                        {this.state.toastData.data}
-                      </span>
-                    </ToastBody>
-                  </Toast>
-                </div>
               </Col>
             </Row>
           </Container>

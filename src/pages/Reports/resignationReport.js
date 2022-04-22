@@ -17,17 +17,17 @@ class ResignationReports extends Component {
       // end_date: "2022-03-24",
       columnDefs: [
         {
-          field: "studentId",
+          field: "teacherId",
           headerName: "Tutor Id",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "fname",
+          field: "teacherFirstName",
           headerName: "First Name",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "teacherLastName",
           headerName: "Last Name",
           filter: "agMultiColumnFilter",
         },
@@ -71,18 +71,17 @@ class ResignationReports extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
   getReport() {
-    this.gridApi = params.api
-    this.gridColumnApi = params.columnApi
-    console.log("calling")
-    const updateData = data => params.api.setRowData(data)
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
+      "api/admin/report/resignation_report/" +
       this.state.start_date +
       "/" +
       this.state.end_date
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(resp =>
+      // updateData(resp.response.data.data)
+      this.setState({ rowData: resp.response.data.data })
+    )
   }
 
   onGridReady = params => {
@@ -93,12 +92,16 @@ class ResignationReports extends Component {
 
     let url =
       BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/resignation_report/{from-date}/{to-date}" +
-      this.state.start_date +
-      "/" +
-      this.state.end_date
+      "api/admin/report/resignation_report/2021-01-01/2022-04-22"
+    //  +
+    // this.state.start_date +
+    // "/" +
+    // this.state.end_date
     let resp = apiGet(url)
-    resp.then(resp => updateData(resp.response.data.data))
+    resp.then(
+      resp => updateData(resp.response.data.data)
+      // this.setState({ rowData: resp.response.data.data })
+    )
   }
   render() {
     return (

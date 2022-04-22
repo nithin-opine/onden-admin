@@ -191,7 +191,7 @@ class InterviewApplication extends Component {
                         </Row>
                         <Row>
                           <Col md={3} className="mt-2">
-                            About Fyroz
+                            About {this.state.details.firstname}
                           </Col>
                           <Col md={9} className="mt-2">
                             {this.state.details.about}

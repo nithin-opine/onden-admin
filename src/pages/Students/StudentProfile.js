@@ -33,11 +33,12 @@ import ReportAgainstStudent from "./ReportAgainstStudentTable"
 import { BaseUrl } from "../../config/BaseUrl"
 import { apiGet, apiPut } from "../../config/apiConfig"
 import { AvForm, AvField } from "availity-reactstrap-validation"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 class StudentProfile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isToggleTaost: false,
       isModelOpen: false,
       activeTab1: "1",
       details: {},
@@ -53,20 +54,8 @@ class StudentProfile extends Component {
     this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.updateGrid = this.updateGrid.bind(this)
-    this.toggle_toast = this.toggle_toast.bind(this)
   }
-  toggle_toast() {
-    const currentState = this.state.isToggleTaost
-    this.setState(
-      {
-        isToggleTaost: !currentState,
-      },
-      () => {
-        setTimeout(() => this.setState({ isToggleTaost: false }), 5000)
-        console.log(this.state.isToggleTaost)
-      }
-    )
-  }
+
   tog_standard() {
     const currentState = this.state.isModelOpen
     this.setState(
@@ -90,11 +79,15 @@ class StudentProfile extends Component {
       this.setState({ toastData: resp.response.data }, () => {
         console.log("toastData is", this.state.toastData)
         if (resp.response.status == 200) {
+          toast.success(this.state.toastData.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
           this.tog_standard()
           this.updateGrid()
-          this.toggle_toast()
         } else {
-          this.toggle_toast()
+          toast.error(this.state.toastData.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         }
       })
     })
@@ -229,6 +222,7 @@ class StudentProfile extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <div className="page-content">
           <MetaTags>
             <title>Onden | Student-profile</title>
@@ -535,25 +529,6 @@ class StudentProfile extends Component {
                         </div>
                       </AvForm>
                     </Modal>
-                    <div
-                      className={
-                        this.state.toastData.code == 200
-                          ? "bg-success position-fixed top-0 end-0 p-2 m-3"
-                          : "bg-danger position-fixed top-0 end-0 p-2 m-3"
-                      }
-                      style={{ zIndex: "1005" }}
-                    >
-                      <Toast isOpen={this.state.isToggleTaost}>
-                        <ToastBody>
-                          <p className="toast-status">
-                            {this.state.toastData.status}
-                          </p>
-                          <span className="toast-msg">
-                            {this.state.toastData.data}
-                          </span>
-                        </ToastBody>
-                      </Toast>
-                    </div>
                   </Col>
                 </Row>
               </Col>

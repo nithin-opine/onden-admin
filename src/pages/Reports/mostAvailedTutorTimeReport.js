@@ -17,17 +17,17 @@ class MATTReport extends Component {
       // end_date: "2022-03-24",
       columnDefs: [
         {
-          field: "studentId",
+          field: "startTime",
           headerName: "Session start time",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "fname",
+          field: "endTime",
           headerName: "Session end time",
           filter: "agMultiColumnFilter",
         },
         {
-          field: "lname",
+          field: "total",
           headerName: "Total number of sessions",
           filter: "agMultiColumnFilter",
         },
@@ -51,20 +51,11 @@ class MATTReport extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
   getReport() {
-    this.gridApi = params.api
-    this.gridColumnApi = params.columnApi
-    console.log("calling")
-    const updateData = data => params.api.setRowData(data)
     let url =
-      BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/most_availed_time_teacher" +
-      this.state.start_date +
-      "/" +
-      this.state.end_date
+      BaseUrl.apiUrl.baseUrl + "api/admin/report/most_availed_time_teacher"
     let resp = apiGet(url)
     resp.then(resp => {
-      console.log(resp.response.data.data)
-      updateData(resp.response.data.data)
+      this.setState({ rowData: resp.response.data.data })
     })
   }
 
@@ -75,11 +66,7 @@ class MATTReport extends Component {
     const updateData = data => params.api.setRowData(data)
 
     let url =
-      BaseUrl.apiUrl.baseUrl +
-      "api/admin/report/most_availed_time_teacher" +
-      this.state.start_date +
-      "/" +
-      this.state.end_date
+      BaseUrl.apiUrl.baseUrl + "api/admin/report/most_availed_time_teacher"
     let resp = apiGet(url)
     resp.then(resp => {
       console.log(resp.response.data.data)
@@ -108,7 +95,7 @@ class MATTReport extends Component {
                         className="ag-theme-alpine"
                       >
                         <Row>
-                          <Col md={2}>
+                          {/* <Col md={2}>
                             <Card>
                               <CardBody>
                                 <div className="filter mb-4">
@@ -139,8 +126,8 @@ class MATTReport extends Component {
                                 </div>
                               </CardBody>
                             </Card>
-                          </Col>
-                          <Col md={10}>
+                          </Col> */}
+                          <Col md={12}>
                             <Card>
                               <CardBody className="report-div">
                                 <AgGridReact
