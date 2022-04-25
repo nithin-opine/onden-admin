@@ -598,7 +598,6 @@ class CoinvalueSettings extends Component {
                                       bordered={false}
                                       striped={false}
                                       defaultSorted={defaultSorted}
-                                      selectRow={selectRow}
                                       classes={
                                         "table align-middle table-nowrap table-striped striped table-borderd"
                                       }

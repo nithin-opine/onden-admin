@@ -32,26 +32,6 @@ class Dashboard extends Component {
       studentEnrollment: [],
       turnOver: [],
       packageSelectionByMonth: [],
-      socials: [
-        {
-          title: "Facebook",
-          bgColor: "bg-primary",
-          iconClass: "mdi-facebook",
-          description: "125",
-        },
-        {
-          title: "Google",
-          bgColor: "bg-info",
-          iconClass: "mdi-google",
-          description: "112",
-        },
-        {
-          title: "Apple",
-          bgColor: "bg-black",
-          iconClass: "mdi-apple",
-          description: "104",
-        },
-      ],
     }
   }
   componentDidMount() {
@@ -280,37 +260,68 @@ class Dashboard extends Component {
                         <Link to="#" className="text-dark">
                           Normal Registrations -{" "}
                           <span className="text-muted font-16">
-                            125 Registrations
+                            {this.state.dashboardDetails.studentRegistrations
+                              ? this.state.dashboardDetails
+                                  .studentRegistrations[0].users + " "
+                              : ""}{" "}
+                            Registrations
                           </span>{" "}
                         </Link>
                       </h5>
                     </div>
+
                     <Row className="mt-4">
-                      {this.state.socials.map((social, key) => (
-                        <Col xs="4" key={"_li_" + key}>
-                          <div className="social-source text-center mt-3">
-                            <div className="avatar-xs mx-auto mb-3">
-                              <span
-                                className={
-                                  "avatar-title rounded-circle " +
-                                  social.bgColor +
-                                  " font-size-16"
-                                }
-                              >
-                                <i
-                                  className={
-                                    "mdi " + social.iconClass + " text-white"
-                                  }
-                                ></i>
-                              </span>
-                            </div>
-                            <h5 className="font-size-15">{social.title}</h5>
-                            <p className="text-muted mb-0">
-                              {social.description} Registrations
-                            </p>
+                      <Col xs="4">
+                        <div className="social-source text-center mt-3">
+                          <div className="avatar-xs mx-auto mb-3">
+                            <span className="avatar-title rounded-circle bg-primary font-size-16">
+                              <i className="mdi mdi-facebook text-white"></i>
+                            </span>
                           </div>
-                        </Col>
-                      ))}
+                          <h5 className="font-size-15">Facebook</h5>
+                          <p className="text-muted mb-0">
+                            {this.state.dashboardDetails.studentRegistrations
+                              ? this.state.dashboardDetails
+                                  .studentRegistrations[1].users + " "
+                              : ""}
+                            Registrations
+                          </p>
+                        </div>
+                      </Col>
+                      <Col xs="4">
+                        <div className="social-source text-center mt-3">
+                          <div className="avatar-xs mx-auto mb-3">
+                            <span className="avatar-title rounded-circle bg-info font-size-16">
+                              <i className="mdi mdi-facebook text-white"></i>
+                            </span>
+                          </div>
+                          <h5 className="font-size-15">Google</h5>
+                          <p className="text-muted mb-0">
+                            {this.state.dashboardDetails.studentRegistrations
+                              ? this.state.dashboardDetails
+                                  .studentRegistrations[2].users + " "
+                              : ""}
+                            Registrations
+                          </p>
+                        </div>
+                      </Col>
+                      <Col xs="4">
+                        <div className="social-source text-center mt-3">
+                          <div className="avatar-xs mx-auto mb-3">
+                            <span className="avatar-title rounded-circle bg-black font-size-16">
+                              <i className="mdi mdi-facebook text-white"></i>
+                            </span>
+                          </div>
+                          <h5 className="font-size-15">Apple</h5>
+                          <p className="text-muted mb-0">
+                            {this.state.dashboardDetails.studentRegistrations
+                              ? this.state.dashboardDetails
+                                  .studentRegistrations[1].users + " "
+                              : ""}
+                            Registrations
+                          </p>
+                        </div>
+                      </Col>
                     </Row>
                   </CardBody>
                 </Card>

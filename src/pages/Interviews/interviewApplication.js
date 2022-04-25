@@ -118,152 +118,195 @@ class InterviewApplication extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <div className="page-content">
-          <MetaTags>
-            <title>Onden | Interview-Application</title>
-          </MetaTags>
-          <Container fluid>
-            <h4>Interviews</h4>
-            <Row>
-              <Col md={12}>
-                <Card className="mini-stats-wid p-3">
-                  <CardBody>
-                    <Row className="tutor-application">
-                      <Col md={2}>
-                        <div className="appCImg">
-                          <img
-                            src={
-                              null != this.state.details.profileImage
-                                ? this.state.details.profileImage
-                                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                            }
-                            alt=""
-                            className=""
-                          />
-                        </div>
-                      </Col>
-                      <Col md={10} className="pl-4">
-                        <Row>
-                          <Col md={12} className="appCname">
-                            {this.state.details.firstname}{" "}
-                            {this.state.details.lastname}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={12}>{this.state.details.email}</Col>
-                        </Row>
-                        <Row>
-                          <Col md={12} className="mt-4">
-                            {this.state.details.country}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-5">
-                            Applied on
-                          </Col>
-                          <Col md={9} className="mt-5">
-                            {this.state.details.interviewSelectedDate}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-2">
-                            Native Language
-                          </Col>
-                          <Col md={9} className="mt-2">
-                            {this.state.details.nativeLanguage}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-2">
-                            Languages fluent at
-                          </Col>
-                          <Col md={9} className="mt-2">
-                            {this.state.details.languagesFluentAt}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-2">
-                            Work experience
-                          </Col>
-                          <Col md={9} className="mt-2">
-                            {this.state.details.workExperience}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-2">
-                            About {this.state.details.firstname}
-                          </Col>
-                          <Col md={9} className="mt-2">
-                            {this.state.details.about}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={3} className="mt-2">
-                            Message to the students
-                          </Col>
-                          <Col md={9} className="mt-2">
-                            {this.state.details.bio}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={9} className="mt-2">
-                            <hr></hr>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={9} className="mt-2">
-                            Please conduct the interview manually and use the
-                            options below.
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={9} className="mt-2">
-                            <hr></hr>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={9} className="formBtn ">
-                            <button
+        {this.state.details !== null ? (
+          <div className="page-content">
+            <MetaTags>
+              <title>Onden | Interview-Application</title>
+            </MetaTags>
+            <Container fluid>
+              <h4>Interviews</h4>
+              <Row>
+                <Col md={12}>
+                  <Card className="mini-stats-wid p-3">
+                    <CardBody>
+                      <Row className="tutor-application">
+                        <Col md={2}>
+                          <div className="appCImg">
+                            <img
+                              src={
+                                null != this.state.details.profileImage
+                                  ? this.state.details.profileImage
+                                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                              }
+                              alt=""
                               className=""
-                              data-toggle="modal"
-                              data-target=".bs-example-modal-sm"
-                              onClick={this.tog_standard1}
-                              disabled={this.state.disabled}
-                            >
-                              Reject application
-                            </button>
-                            <button
-                              className=""
-                              data-toggle="modal"
-                              data-target=".bs-example-modal-md"
-                              onClick={this.tog_standard}
-                              disabled={this.state.disabled}
-                            >
-                              Accept tutor
-                            </button>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-            <Modal
-              isOpen={this.state.isModelOpen}
-              toggle={this.tog_standard}
-              className="modal-sm modal-dialog-centered"
-            >
-              <AvForm
-                onValidSubmit={this.handleValidSubmit}
-                onInvalidSubmit={this.handleInvalidSubmit}
+                            />
+                          </div>
+                        </Col>
+                        <Col md={10} className="pl-4">
+                          <Row>
+                            <Col md={12} className="appCname">
+                              {this.state.details.firstname}{" "}
+                              {this.state.details.lastname}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={12}>{this.state.details.email}</Col>
+                          </Row>
+                          <Row>
+                            <Col md={12} className="mt-4">
+                              {this.state.details.country}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-5">
+                              Applied on
+                            </Col>
+                            <Col md={9} className="mt-5">
+                              {this.state.details.interviewSelectedDate}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-2">
+                              Native Language
+                            </Col>
+                            <Col md={9} className="mt-2">
+                              {this.state.details.nativeLanguage}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-2">
+                              Languages fluent at
+                            </Col>
+                            <Col md={9} className="mt-2">
+                              {this.state.details.languagesFluentAt}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-2">
+                              Work experience
+                            </Col>
+                            <Col md={9} className="mt-2">
+                              {this.state.details.workExperience}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-2">
+                              About {this.state.details.firstname}
+                            </Col>
+                            <Col md={9} className="mt-2">
+                              {this.state.details.about}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={3} className="mt-2">
+                              Message to the students
+                            </Col>
+                            <Col md={9} className="mt-2">
+                              {this.state.details.bio}
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={9} className="mt-2">
+                              <hr></hr>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={9} className="mt-2">
+                              Please conduct the interview manually and use the
+                              options below.
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={9} className="mt-2">
+                              <hr></hr>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col md={9} className="formBtn ">
+                              <button
+                                className=""
+                                data-toggle="modal"
+                                data-target=".bs-example-modal-sm"
+                                onClick={this.tog_standard1}
+                                disabled={this.state.disabled}
+                              >
+                                Reject application
+                              </button>
+                              <button
+                                className=""
+                                data-toggle="modal"
+                                data-target=".bs-example-modal-md"
+                                onClick={this.tog_standard}
+                                disabled={this.state.disabled}
+                              >
+                                Accept tutor
+                              </button>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+              <Modal
+                isOpen={this.state.isModelOpen}
+                toggle={this.tog_standard}
+                className="modal-sm modal-dialog-centered"
+              >
+                <AvForm
+                  onValidSubmit={this.handleValidSubmit}
+                  onInvalidSubmit={this.handleInvalidSubmit}
+                >
+                  <div className="modal-header">
+                    <div></div>
+
+                    <button
+                      type="button"
+                      onClick={this.tog_standard}
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="modal-inner-header">
+                      Enter a coin exchange ratio for this tutor. You can later
+                      change this in the tutor`&apos;`s profile.
+                    </div>
+                    <AvField
+                      name="coinbalance"
+                      label="Coin exchange ratio"
+                      onChange={this.handleChange}
+                      type="number"
+                      required
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={this.state.disabled}
+                    >
+                      Accept
+                    </button>
+                  </div>
+                </AvForm>
+              </Modal>
+              <Modal
+                isOpen={this.state.isModelOpen1}
+                toggle={this.tog_standard1}
+                className="modal-sm modal-dialog-centered"
               >
                 <div className="modal-header">
                   <div></div>
 
                   <button
                     type="button"
-                    onClick={this.tog_standard}
+                    onClick={this.tog_standard1}
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
@@ -273,65 +316,28 @@ class InterviewApplication extends Component {
                 </div>
                 <div className="modal-body">
                   <div className="modal-inner-header">
-                    Enter a coin exchange ratio for this tutor. You can later
-                    change this in the tutor`&apos;`s profile.
+                    Do you really want to reject this application?
                   </div>
-                  <AvField
-                    name="coinbalance"
-                    label="Coin balance"
-                    onChange={this.handleChange}
-                    type="number"
-                    required
-                  />
                 </div>
                 <div className="modal-footer">
+                  <button className="btn ">No</button>
                   <button
                     type="submit"
                     className="btn btn-primary"
                     disabled={this.state.disabled}
+                    onClick={this.rejectInterview}
                   >
-                    Accept
+                    Yes
                   </button>
                 </div>
-              </AvForm>
-            </Modal>
-            <Modal
-              isOpen={this.state.isModelOpen1}
-              toggle={this.tog_standard1}
-              className="modal-sm modal-dialog-centered"
-            >
-              <div className="modal-header">
-                <div></div>
-
-                <button
-                  type="button"
-                  onClick={this.tog_standard1}
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <div className="modal-inner-header">
-                  Do you really want to reject this application?
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button className="btn ">No</button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={this.state.disabled}
-                  onClick={this.rejectInterview}
-                >
-                  Yes
-                </button>
-              </div>
-            </Modal>
-          </Container>
-        </div>
+              </Modal>
+            </Container>
+          </div>
+        ) : (
+          <div className="notFound">
+            The resource you requested could not be found.
+          </div>
+        )}
       </React.Fragment>
     )
     InterviewApplication.propTypes = {

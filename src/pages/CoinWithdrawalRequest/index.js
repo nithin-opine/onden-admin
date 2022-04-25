@@ -41,7 +41,17 @@ const columns = [
     dataField: "requestedon",
     text: "Coins requested on",
     sort: true,
+    sortFunc: (a, b, order) => {
+      let startdate = new Date(a)
+      let enddate = new Date(b)
+      console.log(startdate, enddate)
+      if (order === "asc") {
+        return enddate - startdate
+      }
+      return startdate - enddate // desc
+    },
   },
+
   {
     dataField: "coinsrequested",
     text: "Coins requested",
@@ -51,6 +61,12 @@ const columns = [
     dataField: "coinbalance",
     text: "Coin balance",
     sort: true,
+    sortFunc: (a, b, order, dataField, rowA, rowB) => {
+      if (order === "asc") {
+        return b - a
+      }
+      return a - b // desc
+    },
   },
   {
     dataField: "exchangeratio",
@@ -419,7 +435,7 @@ class CoinWithDrawalRequest extends Component {
       const rows = []
       resp.response.data.data.forEach((value, index) => {
         let date = new Date(value.paymentTranferRequestedOn)
-        let localDate = date.toLocaleString()
+        let localDate = date.toDateString()
         // let status = ""
         // switch (value.interviewStatus) {
         //   case 1:
@@ -511,7 +527,6 @@ class CoinWithDrawalRequest extends Component {
                                         responsive
                                         bordered={false}
                                         striped={false}
-                                        defaultSorted={defaultSorted}
                                         classes={
                                           "table align-middle table-nowrap table-striped striped table-borderd"
                                         }
