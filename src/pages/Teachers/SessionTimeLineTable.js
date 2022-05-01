@@ -39,7 +39,7 @@ const columns = [
   },
   {
     dataField: "studentFirstName",
-    text: "Tutor",
+    text: "Student",
     sort: true,
   },
   {

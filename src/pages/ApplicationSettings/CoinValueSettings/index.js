@@ -660,6 +660,8 @@ class CoinvalueSettings extends Component {
                         value={this.state.selectedRow.count}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="defaultvalue"
@@ -668,6 +670,8 @@ class CoinvalueSettings extends Component {
                         value={this.state.selectedRow.defaultvalue}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="credited"
@@ -676,6 +680,8 @@ class CoinvalueSettings extends Component {
                         value={this.state.selectedRow.credited}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="minbalance"
@@ -683,6 +689,8 @@ class CoinvalueSettings extends Component {
                         value={this.state.selectedRow.minbalance}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                     </div>
                     <div className="modal-footer">

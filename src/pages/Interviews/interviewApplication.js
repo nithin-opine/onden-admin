@@ -283,6 +283,8 @@ class InterviewApplication extends Component {
                       onChange={this.handleChange}
                       type="number"
                       required
+                      min="1"
+                      step="1"
                     />
                   </div>
                   <div className="modal-footer">

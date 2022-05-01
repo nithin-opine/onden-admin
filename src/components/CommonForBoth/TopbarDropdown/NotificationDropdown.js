@@ -81,7 +81,7 @@ const NotificationDropdown = props => {
                     to={
                       e.type == "STUDENT"
                         ? "/student-profile/" + e.typeId
-                        : "/teacher-profile/" + e.typeId
+                        : "/application/" + e.typeId
                     }
                     className="text-reset notification-item"
                   >

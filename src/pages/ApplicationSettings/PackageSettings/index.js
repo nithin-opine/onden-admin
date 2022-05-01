@@ -681,6 +681,8 @@ class PackageSettings extends Component {
                         value={this.state.selectedRow.amount}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="coins"
@@ -689,6 +691,8 @@ class PackageSettings extends Component {
                         value={this.state.selectedRow.coins}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="totalminutes"
@@ -696,6 +700,8 @@ class PackageSettings extends Component {
                         value={this.state.selectedRow.totalminutes}
                         onChange={this.handleChange}
                         required
+                        min="1"
+                        step="1"
                       />
                       <AvField
                         name="expiry"
@@ -704,6 +710,8 @@ class PackageSettings extends Component {
                         onChange={this.handleChange}
                         type="number"
                         required
+                        min="1"
+                        step="1"
                       />
                     </div>
                     <div className="modal-footer">

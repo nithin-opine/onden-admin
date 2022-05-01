@@ -25,6 +25,7 @@ export default class Application extends Component {
       slot: "",
       conf: false,
       error: false,
+      disabled: false,
     }
     this.tog_small = this.tog_small.bind(this)
     this.tog_interview = this.tog_interview.bind(this)
@@ -114,6 +115,7 @@ export default class Application extends Component {
     if (this.state.slot == "") {
       this.setState({ error: true })
     } else {
+      this.setState({ disabled: true })
       let body = {
         teacherId: this.state.apiList.id,
         interviewType: "Telephone Interview",
@@ -184,9 +186,17 @@ export default class Application extends Component {
                       .interviewSlotId
                   }
                 />
-                {this.state.apiList.selectedInterviewSlotList[slot].startTime +
+                {new Date(
+                  this.state.apiList.selectedInterviewSlotList[
+                    slot
+                  ].startTimeUtc
+                ).toLocaleTimeString() +
                   " - " +
-                  this.state.apiList.selectedInterviewSlotList[slot].endTime}
+                  new Date(
+                    this.state.apiList.selectedInterviewSlotList[
+                      slot
+                    ].endTimeUtc
+                  ).toLocaleTimeString()}
               </label>
             )
           }
@@ -463,6 +473,8 @@ export default class Application extends Component {
                                     <button
                                       className="modalProceedBtn"
                                       type="submit"
+                                      disabled={this.state.disabled}
+                                      hidden={this.state.disabled}
                                     >
                                       Schedule interview
                                     </button>

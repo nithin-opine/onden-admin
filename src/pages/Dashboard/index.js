@@ -115,17 +115,22 @@ class Dashboard extends Component {
                       <Col sm="12">
                         <p className="text-muted">This month</p>
                         <h3>
-                          {null != this.state.dashboardDetails.monthlyRevenue
-                            ? this.state.dashboardDetails.monthlyRevenue
+                          {null != this.state.dashboardDetails.lastMonthRevenue
+                            ? this.state.dashboardDetails.lastMonthRevenue
                             : "0"}
                           ¥
                         </h3>
                         <p className="text-muted">
                           <span className="text-success me-2">
                             {" "}
-                            0% <i className="mdi mdi-arrow-up"></i>{" "}
-                          </span>{" "}
-                          From previous period
+                            {null !=
+                            this.state.dashboardDetails
+                              .percentFromLastMonthRevenue
+                              ? this.state.dashboardDetails
+                                  .percentFromLastMonthRevenue
+                              : "0"}
+                            % From previous period
+                          </span>
                         </p>
                       </Col>
                     </Row>
@@ -150,7 +155,7 @@ class Dashboard extends Component {
                       </Col>
                       <Col sm="6">
                         <p className="text-muted">Pending tutor payment</p>
-                        <h3>¥</h3>
+                        <h3>0¥</h3>
                         <p className="text-muted">
                           <span className="text-success me-2">
                             {" "}
@@ -212,7 +217,7 @@ class Dashboard extends Component {
                           <div className="flex-grow-1">
                             <p className="text-muted fw-medium">Revenue</p>
                             <h4 className="mb-0">
-                              {this.state.dashboardDetails.revenue}
+                              {this.state.dashboardDetails.revenue}¥
                             </h4>
                           </div>
                           <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
@@ -366,8 +371,21 @@ class Dashboard extends Component {
                       <div className="mb-4">
                         <i className="bx bx-map-pin text-primary display-4" />
                       </div>
-                      <h3>ANJANA</h3>
-                      <p>San Francisco</p>
+                      <h3>
+                        {this.state.topTutors[0]
+                          ? this.state.topTutors[0].teacherFirstName
+                          : ""}
+                      </h3>
+                      <p>
+                        {this.state.topTutors[0]
+                          ? this.state.topTutors[0].ratings
+                          : "Null "}{" "}
+                        Rating,
+                        {this.state.topTutors[0]
+                          ? this.state.topTutors[0].classDuration
+                          : "Null"}{" "}
+                        Total class duration{" "}
+                      </p>
                     </div>
 
                     <div className="table-responsive mt-4">

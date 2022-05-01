@@ -503,7 +503,7 @@ class TeacherProfile extends Component {
                                 this.toggle1("2")
                               }}
                             >
-                              Coin purchase history
+                              Coin withdrawal history
                             </NavLink>
                           </NavItem>
                           <NavItem>
@@ -516,7 +516,7 @@ class TeacherProfile extends Component {
                                 this.toggle1("3")
                               }}
                             >
-                              Reports against student
+                              Reports against tutor
                             </NavLink>
                           </NavItem>
                         </Nav>
@@ -583,6 +583,9 @@ class TeacherProfile extends Component {
                             onChange={this.handleChange}
                             type="number"
                             required
+                            min="0"
+                            step="1"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                           />
                         </div>
                         <div className="modal-footer">
@@ -628,6 +631,8 @@ class TeacherProfile extends Component {
                             onChange={this.handleChange}
                             type="number"
                             required
+                            min="0"
+                            step="1"
                           />
                         </div>
                         <div className="modal-footer">

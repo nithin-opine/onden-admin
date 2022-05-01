@@ -403,27 +403,32 @@ class InterviewList extends Component {
   componentDidMount() {
     let url = BaseUrl.apiUrl.baseUrl + "api/admin/teacher/interview_schedule"
     let resp = apiGet(url)
+    var today = new Date()
 
     resp.then(resp => {
       console.log(resp)
       const rows = []
       resp.response.data.data.forEach((value, index) => {
-        let date = new Date(value.dateCreated)
+        var day = new Date(value.interviewDate)
+        var date = new Date(value.interviewDate)
         let localDate = date.toLocaleString()
         let status = ""
         switch (value.interviewStatus) {
           case 1:
-            status = "open"
+            status = "Registererd"
             break
           case 2:
-            status = "Close"
+            day >= today
+              ? (status = "Upcoming Interview")
+              : (status = "Pending Interview")
             break
           case 3:
-            status = "Pending"
+            status = "Selected as tutor"
             break
           case 4:
-            status = "Rejected"
+            status = "Rejected application"
             break
+
           default:
           // code block
         }
@@ -432,7 +437,9 @@ class InterviewList extends Component {
           id: value.teacherId,
           name: value.teacherName,
           interviewDate: value.interviewDate,
-          interviewStartTime: value.interviewStartTime,
+          interviewStartTime: new Date(
+            value.interviewStartTimeUtc
+          ).toLocaleTimeString(),
           interviewStatus: status,
           view: (
             <>
